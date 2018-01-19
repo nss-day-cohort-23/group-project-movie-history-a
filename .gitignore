@@ -4,3 +4,4 @@ css/
 dist/bundle.js
 .sass-cache
 package-lock.json
+scripts/credentials.js
