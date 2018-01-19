@@ -2,6 +2,8 @@
 
 const $ = require('jquery');
 
+const apiKey = require("./credentials");
+
 const attachFirebaseIDs = data => {
   // This function *should* loop through the data received from Firebase and
   // attach the IDs given to each object by Firebase, making those IDs accessible
