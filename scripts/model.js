@@ -2,6 +2,19 @@
 
 const $ = require('jquery');
 
+const attachFirebaseIDs = data => {
+  // This function *should* loop through the data received from Firebase and
+  // attach the IDs given to each object by Firebase, making those IDs accessible
+  // for other use. This needs to be tested & confirmed
+  let dataToReturn = [];
+  let keys = Object.keys(data);
+  keys.forEach(key => {
+    data[key].id = key;
+    dataToReturn.push(data[key]);
+  });
+  return dataToReturn;
+};
+
 const getActorsFromMovieDB = () => {
   // EITHER: Successful GET requests inside of this mod call this function &
   // attach the actor data to the general movie data obj.
@@ -21,6 +34,11 @@ module.exports.getPopularMoviesFromMovieDB = () => {
 
 module.exports.getFirebaseMovies = uuid => {
   // GET Promise to firebaseDB all movies matching this uuid.
+  // Potentially: the .done() fn should look like this ->
+  //    .done(data => {
+  //      dataWithFbIds = attachFirebaseIDs(data);
+  //      resolve(dataWithFbIds);
+  //    });
 };
 
 module.exports.postFirebaseMovie = movieObj => {
