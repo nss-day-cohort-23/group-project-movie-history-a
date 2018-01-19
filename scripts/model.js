@@ -2,6 +2,15 @@
 
 const $ = require('jquery');
 
+const getActorsFromMovieDB = () => {
+  // EITHER: Successful GET requests inside of this mod call this function &
+  // attach the actor data to the general movie data obj.
+  // OR: this is exported & controller.js calls this func in the .then statement
+  // of each GET request.
+  // Joe Shep also said this can be chained onto some GET requests when one knows
+  // the movie_id already?
+};
+
 module.exports.getMovieDBSearch = term => {
   // GET Promise to themoviedb.org all movies matching this search term.
 };
