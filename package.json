@@ -1,7 +1,7 @@
 {
-    "name": "Movie History",
+    "name": "Movie-history",
     "version": "1.0.0",
-    "description": "",
+    "description": "An assignment for NSS",
     "main": "Gruntfile.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
