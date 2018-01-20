@@ -5,12 +5,13 @@ const model = require('./model');
 const view = require('./view');
 
 module.exports.populatePage = () => {
-    view.printNav();
-    view.printFooter();
-    view.printBody();
-// call to API to get Top Rated movies, then pass Top Rated Movies to print to DOM
-    model.getPopularMovies()
-    .then(data => view.printCards(data));
+    // view.printNav();
+    // view.printFooter();
+    // view.printBody();
+    view.printHomepage();
+    // call to API to get Top Rated movies, then pass Top Rated Movies to print to DOM
+    // model.getPopularMovies()
+    // .then(data => printCards(data))
 };
 
 module.exports.clickLogin = () => {
