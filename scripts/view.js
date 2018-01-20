@@ -7,21 +7,29 @@ const $ = require("jquery");
 // themoviedb.org: https://image.tmdb.org/t/p/w500/ <- here is where
 // ${data.poster_path} would go, potentially.
 
-module.exports.printNav = () => {
-  // Print navbar using navbar Handlebar template
-  // Potentially combined with printFooter and/or printBody
+// module.exports.printNav = () => {
+//   // Print navbar using navbar Handlebar template
+//   // Potentially combined with printFooter and/or printBody
+// };
+
+// module.exports.printBody = () => {
+//   // Print body (essentially an empty container for movie cards to be printed to)
+//   // using body Handlebar template
+//   // Potentially combined with printNav and/or printFooter
+// };
+
+// module.exports.printFooter = () => {
+//   // Print footer using footer Handlebar template
+//   // Potentially combined with printNav and/or printBody
+// };
+
+// TEMPORARY FIX- this prints the entire template with everything showing. I'm break it out into partials that we can hide/ show according to logged in state later today, but for now here's hte basics so everybody can get started
+module.exports.printHomepage = () => {
+  console.log("this function was fired!");
+  const homepageTemplate = require("../templates/boilerplate.hbs");
+  $("#container").append(homepageTemplate());
 };
 
-module.exports.printBody = () => {
-  // Print body (essentially an empty container for movie cards to be printed to)
-  // using body Handlebar template
-  // Potentially combined with printNav and/or printFooter
-};
-
-module.exports.printFooter = () => {
-  // Print footer using footer Handlebar template
-  // Potentially combined with printNav and/or printBody
-};
 
 module.exports.printCards = movieData => {
   // Prints each card to the DOM in the body container given movieData
