@@ -1,11 +1,11 @@
-// "use strict";
+"use strict";
 
-// const $ = require("jquery");
-// // Include all Handlebars templates/partials.
+const $ = require("jquery");
+// Include all Handlebars templates/partials.
 
-// // The following appears to be the beginning of the URL for imgs hosted on
-// // themoviedb.org: https://image.tmdb.org/t/p/w500/ <- here is where
-// // ${data.poster_path} would go, potentially.
+// The following appears to be the beginning of the URL for imgs hosted on
+// themoviedb.org: https://image.tmdb.org/t/p/w500/ <- here is where
+// ${data.poster_path} would go, potentially.
 
 // module.exports.printNav = () => {
 //   // Print navbar using navbar Handlebar template
@@ -22,6 +22,14 @@
 //   // Print footer using footer Handlebar template
 //   // Potentially combined with printNav and/or printBody
 // };
+
+// TEMPORARY FIX- this prints the entire template with everything showing. I'm break it out into partials that we can hide/ show according to logged in state later today, but for now here's hte basics so everybody can get started
+module.exports.printHomepage = () => {
+  console.log("this function was fired!");
+  const homepageTemplate = require("../templates/boilerplate.hbs");
+  $("#container").append(homepageTemplate());
+};
+
 
 // module.exports.printCards = movieData => {
 //   // Prints each card to the DOM in the body container given movieData
