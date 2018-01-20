@@ -14,6 +14,19 @@ module.exports.populatePage = () => {
     // .then(data => printCards(data))
 };
 
+module.exports.activateListeners = () =>{
+    $("#db-searchbar").keyup(function(e){
+        if(e.keyCode === 13){
+            let userQuery = this.value;
+            model.searchMovieDB(userQuery)
+            .then(moviesArray=>{
+                console.log('moviesArray: ',moviesArray);
+                // view.printCards(moviesArray);
+            });
+        }
+    });
+};
+
 module.exports.clickLogin = () => {
 // function to pop up google authentication with firebase
 // once authenticated, watched/unwatched toggle button will populate with below function

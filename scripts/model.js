@@ -4,6 +4,14 @@ const $ = require('jquery');
 
 const apiKey = require("./credentials");
 
+let movieExampleObject = {
+  movie_id: "movie.movie_id",
+  uuid: "currentUser.id",
+  watched: true,
+  rating: 5
+};
+
+
 const attachFirebaseIDs = data => {
   // This function *should* loop through the data received from Firebase and
   // attach the IDs given to each object by Firebase, making those IDs accessible
@@ -26,12 +34,68 @@ const getActorsFromMovieDB = () => {
   // the movie_id already?
 };
 
-module.exports.getMovieDBSearch = term => {
+module.exports.searchMovieDB = userQuery => {
   // GET Promise to themoviedb.org all movies matching this search term.
+  return new Promise((resolve, reject)=>{
+    let searchResults = [];
+    $.ajax({
+      url:`https://api.themoviedb.org/3/search/movie?api_key=${apiKey.apiKey}&language=en-US&query=${userQuery}&page=1&include_adult=false`
+    }).done(movies=>{
+      movies.results.forEach(movie=>{
+         let movieYear = movie.release_date.slice(0, 4);
+         $.ajax({
+           url: `https://api.themoviedb.org/3/movie/${movie.id}/credits?api_key=ee807bfed0aef374f0857819a25db3b6`
+         }).done((cast)=>{
+           let movieTopBilledActorsArray = [];
+           cast.cast.forEach(castMember=>movieTopBilledActorsArray.push(castMember.name));
+           let topActors = movieTopBilledActorsArray.slice(0, 3).join(", ");
+           let moviePosterURL = `https://image.tmdb.org/t/p/w342/${movie.poster_path}`;
+           let movieResult = {
+             movie_title: movie.title,
+             movie_id: movie.id,
+             movie_year: movieYear,
+             movie_cast: topActors,
+             movie_poster_full_URL: moviePosterURL
+           };
+           searchResults.push(movieResult);
+         }); // end of cast forEach
+      });
+    });
+    resolve(searchResults);
+  }); // end of Promise
 };
 
 module.exports.getPopularMoviesFromMovieDB = () => {
   // GET Promise to themoviedb.org their 'popular' movies data.
+  console.log('apiKey: ',apiKey);
+  return new Promise((resolve, reject)=>{
+    let popularMoviesArray = [];
+    $.ajax({
+      url: `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey.apiKey}&language=en-US&page=1`
+    }).done((popularMovies)=>{
+      let moviesArray = [];
+      popularMovies.results.forEach((movie)=>{
+        let movieYear = movie.release_date.slice(0, 4);
+        $.ajax({
+          url: `https://api.themoviedb.org/3/movie/${movie.id}/credits?api_key=ee807bfed0aef374f0857819a25db3b6`
+        }).done((cast)=>{
+          let movieTopBilledActorsArray = [];
+          cast.cast.forEach(castMember=>movieTopBilledActorsArray.push(castMember.name));
+          let topActors = movieTopBilledActorsArray.slice(0, 3).join(", ");
+          let moviePosterURL = `https://image.tmdb.org/t/p/w342/${movie.poster_path}`;
+          let popMovie = {
+            movie_title: movie.title,
+            movie_id: movie.id,
+            movie_year: movieYear,
+            movie_cast: topActors,
+            movie_poster_full_URL: moviePosterURL
+          };
+          popularMoviesArray.push(popMovie);
+        }); // end of cast forEach
+      }); // end of movie forEach
+    });
+    resolve(popularMoviesArray);
+  });// end of Promise
 };
 
 module.exports.getFirebaseMovies = uuid => {
