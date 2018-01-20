@@ -31,42 +31,42 @@ module.exports.printHomepage = () => {
 };
 
 
-// module.exports.printCards = movieData => {
-//   // Prints each card to the DOM in the body container given movieData
-// };
+module.exports.printCards = movieData => {
+  // Prints each card to the DOM in the body container given movieData
+};
 
-// module.exports.removeCard = fbID => {
-//   // Removes movie card from DOM using fbID
-// };
+module.exports.removeCard = fbID => {
+  // Removes movie card from DOM using fbID
+};
 
-// module.exports.printLogoutBtn = () => {
-//   // Prints logout btn in navbar
-//   // Potentially combined with other login/logout btn fn() (i.e., toggleLoginOutBtns)
-// };
+module.exports.printLogoutBtn = () => {
+  // Prints logout btn in navbar
+  // Potentially combined with other login/logout btn fn() (i.e., toggleLoginOutBtns)
+};
 
-// module.exports.removeLogoutBtn = () => {
-//   // Removes logout btn from navbar
-//   // Potentially combined with other login/logout btn fn() (i.e., toggleLoginOutBtns)
-// };
+module.exports.removeLogoutBtn = () => {
+  // Removes logout btn from navbar
+  // Potentially combined with other login/logout btn fn() (i.e., toggleLoginOutBtns)
+};
 
-// module.exports.printLoginBtn = () => {
-//   // Prints login btn in navbar
-//   // Potentially combined with printLogoutBtn (i.e., toggleLoginOutBtns)
-// };
+module.exports.printLoginBtn = () => {
+  // Prints login btn in navbar
+  // Potentially combined with printLogoutBtn (i.e., toggleLoginOutBtns)
+};
 
-// module.exports.removeLoginBtn = () => {
-//   // Removes login btn from navbar
-//   // Potentially combined with other login/logout btn fn() (i.e., toggleLoginOutBtns)
-// };
+module.exports.removeLoginBtn = () => {
+  // Removes login btn from navbar
+  // Potentially combined with other login/logout btn fn() (i.e., toggleLoginOutBtns)
+};
 
-// module.exports.printMyMoviesSearchBar = () => {
-//   // Prints "Search My Movies" search bar in navbar
-// };
+module.exports.printMyMoviesSearchBar = () => {
+  // Prints "Search My Movies" search bar in navbar
+};
 
-// module.exports.printSuccessMsg = () => {
-//   // Prints success msg in movie card
-// };
+module.exports.printSuccessMsg = () => {
+  // Prints success msg in movie card
+};
 
-// module.exports.printStars = () => {
-//   // Prints colored in stars on movie card
-// };
+module.exports.printStars = () => {
+  // Prints colored in stars on movie card
+};
