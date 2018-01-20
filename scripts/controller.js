@@ -9,12 +9,13 @@ module.exports.populatePage = () => {
     // view.printFooter();
     // view.printBody();
     view.printHomepage();
+    activateListeners();
     // call to API to get Top Rated movies, then pass Top Rated Movies to print to DOM
-    // model.getPopularMovies()
+    model.getPopularMovies(); 
     // .then(data => printCards(data))
 };
 
-module.exports.activateListeners = () =>{
+const activateListeners = () =>{
     $("#db-searchbar").keyup(function(e){
         if(e.keyCode === 13){
             let userQuery = this.value;
