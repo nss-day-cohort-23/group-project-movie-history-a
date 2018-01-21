@@ -1,6 +1,7 @@
 "use strict";
 
 const $ = require("jquery");
+const firebase = require("./fb-config");
 const model = require('./model');
 const view = require('./view');
 
@@ -13,6 +14,9 @@ module.exports.populatePage = () => {
     // call to API to get Top Rated movies, then pass Top Rated Movies to print to DOM
     model.getPopularMovies(); 
     // .then(data => printCards(data))
+
+const logout = () => {
+  return firebase.auth().signOut();
 };
 
 const activateListeners = () =>{
