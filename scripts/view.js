@@ -32,6 +32,7 @@ module.exports.printHomepage = () => {
 
 module.exports.printCards = movieData => {
   // Prints each card to the DOM in the body container given movieData
+  // 
 };
 
 module.exports.removeCard = fbID => {
