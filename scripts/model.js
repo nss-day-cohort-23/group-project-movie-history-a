@@ -77,7 +77,7 @@ module.exports.getPopularMoviesFromMovieDB = () => {
       popularMovies.results.forEach((movie)=>{
         let movieYear = movie.release_date.slice(0, 4);
         $.ajax({
-          url: `https://api.themoviedb.org/3/movie/${movie.id}/credits?api_key=ee807bfed0aef374f0857819a25db3b6`
+          url: `https://api.themoviedb.org/3/movie/${movie.id}/credits?api_key=${apiKey.apiKey}`
         }).done((cast)=>{
           let movieTopBilledActorsArray = [];
           cast.cast.forEach(castMember=>movieTopBilledActorsArray.push(castMember.name));
