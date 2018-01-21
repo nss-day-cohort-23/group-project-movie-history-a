@@ -16,17 +16,28 @@ const authUser = key => {
   return firebase.auth().signInWithPopup(provider);
 };
 
+const clickLogin = () => {
+  // function to pop up google authentication with firebase
+  console.log("clicked login!");
+  authUser()
+    .then(result => {
+      console.log("Success!");
+      let user = result.user;
+      let uid = user.uid;
+    })
+    .catch(error => {
+      console.log("Failure!");
+      let errorCode = error.code;
+      let errorMessage = error.message;
     });
+  // once authenticated, watched/unwatched toggle button will populate with below function
+  // view.printToggle();
+  // prints search bar to search My Movies
+  view.printMyMoviesSearch();
+  view.removeLoginBtn();
+  view.printLogOut();
 };
 
-module.exports.clickLogin = () => {
-// function to pop up google authentication with firebase
-// once authenticated, watched/unwatched toggle button will populate with below function
-    view.printToggle();
-// prints search bar to search My Movies
-    view.printMyMoviesSearch();
-    view.removeLoginBtn();
-    view.printLogOut();
 const activateListeners = () => {
   $("#db-searchbar").keyup(function(e) {
     if (e.keyCode === 13) {
