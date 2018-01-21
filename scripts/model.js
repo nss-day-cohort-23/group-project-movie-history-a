@@ -3,6 +3,8 @@
 const $ = require('jquery');
 
 const apiKey = require("./credentials");
+const dbURL = "https://team-a-movie-history.firebaseio.com";
+
 
 const attachFirebaseIDs = data => {
   // This function *should* loop through the data received from Firebase and
@@ -34,27 +36,87 @@ module.exports.getPopularMoviesFromMovieDB = () => {
   // GET Promise to themoviedb.org their 'popular' movies data.
 };
 
-module.exports.getFirebaseMovies = uuid => {
-  // GET Promise to firebaseDB all movies matching this uuid.
-  // Potentially: the .done() fn should look like this ->
-  //    .done(data => {
-  //      dataWithFbIds = attachFirebaseIDs(data);
-  //      resolve(dataWithFbIds);
-  //    });
+
+// promises all movies matching a user ID
+// should resolve matching movies with firebase IDs already attached
+module.exports.getFirebaseMovies = uid => {
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      url: `${dbURL}.json?orderBy="uid"&equalTo=${uid}`
+    })
+    .done(data => {
+      let dataWithFBIds = attachFirebaseIDs(data);
+      resolve(dataWithFBIds);
+    })
+    .fail(error => reject(error));
+    });
 };
 
+// returns a promise to post a new movie object to firebase, resolves the firebase ID
 module.exports.postFirebaseMovie = movieObj => {
-  // POST Promise to firebaseDB the movie object passed in.
-  // Return the Firebase ID returned from successful POST request?
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      url: `${dbURL}.json`,
+      method: "POST",
+      data: JSON.stringify(movieObj)
+    }).done(fbID => {
+      console.log(fbID);
+      resolve(fbID);
+    });
+  });
 };
 
-module.exports.patchFirebaseMovie = urlPartial => {
-  // PATCH Promise to firebaseDB completing the url with `urlPartial` passed in.
+// returns a promise that adds a property of 'watched' to the given firebase movie object and sets the value to 'true'
+module.exports.markAsWatched = fbID => {
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      url: `${dbURL}/${fbID}.json`,
+      method: "PATCH",
+      data: JSON.stringify({ watched: true })
+    })
+      .done(data => {
+        resolve(data);
+      })
+      .fail(error => {
+        console.log("uh-oh", error.statusText);
+        reject(error);
+      });
+  });
 };
 
+// returns a promise that sets a 
+module.exports.rateMovie = (fbID, rating) => {
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      url: `${dbURL}/${fbID}.json`,
+      method: "PATCH",
+      data: JSON.stringify({ rating })
+    })
+      .done(data => {
+        resolve(data);
+      })
+      .fail(error => {
+        console.log("uh-oh", error.statusText);
+        reject(error);
+      });
+  });
+};
+
+// returns a promise that deletes a movie object in firebase with the given ID
 module.exports.deleteFirebaseMovie = fbID => {
-  // DELETE Promise to firebaseDB deleting the obj matching the Firebase ID
-  // passed in.
+    return new Promise((resolve, reject) => {
+    $.ajax({
+      url: `${dbURL}/${fbID}.json`,
+      method: "DELETE"
+    })
+      .done(data => {
+        resolve(data);
+      })
+      .fail(error => {
+        console.log("uh oh", error.statusText);
+        reject(error);
+      });
+  });
 };
 
 module.exports.filterByParameter = (data, parameter) => {
