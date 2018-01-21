@@ -32,6 +32,12 @@ const activateListeners = () =>{
     });
     $(document).on("click", ".addToItinerary", function(){
         
+const authUser = key => {
+  const provider = new firebase.auth.GoogleAuthProvider();
+
+  return firebase.auth().signInWithPopup(provider);
+};
+
     });
 };
 
