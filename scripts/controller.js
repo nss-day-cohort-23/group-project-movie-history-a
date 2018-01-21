@@ -37,6 +37,7 @@ module.exports.enterSearchMyMovies = uid => {
 // get value entered in search
     let searchTerm = $('#searchMyMovies').val();
 // passing search term to FB call
+    uid = 4321; // dummy id from the tester movieObj
     model.getFirebaseMovies(uid)
 // takes returned data filtered by UID to filter through by search term & print to DOM
     .then(allMovies => {
@@ -67,7 +68,7 @@ module.exports.clickAddToWatchList = () => {
 // otherwise...take the movie the picked and send it to FB to post
     let movieObj = {
         movieID: 1234,
-        userID: 4321
+        uid: 4321
     };
     model.postFirebaseMovie(movieObj);
     // .then(view.printSuccess()); // print successmessage when movie added
@@ -75,15 +76,13 @@ module.exports.clickAddToWatchList = () => {
 
 // this should accept a firebase movie ID
 module.exports.clickWatched = (fbID) => {
-    model.markAsWatched(fbID)
-    .then(console.log("you successfully marked this movie as watched!"));
+    model.markAsWatched(fbID);
     // .then(view.printSuccess());
 };
 
 // this should accept a firebase movie ID and a number rating from the user
 module.exports.clickRating = (fbID, rating) => {
-    model.rateMovie(fbID, rating)
-    .then(console.log("movie successfully patched!"));
+    model.rateMovie(fbID, rating);
     // .then(view.printStars(ratingObj));
 };
 
@@ -101,8 +100,7 @@ module.exports.clickLogOut = () => {
 // pass firebase ID of movie user clicked to delete and remove from FB,
 // then remove from DOM
 module.exports.clickDeleteMovie = fbID => {
-    model.deleteFirebaseMovie(fbID)
-    .then(console.log("movie deleted successfully!"));
+    model.deleteFirebaseMovie(fbID);
     // .then(view.removeCard(fbID));
 };
 

@@ -13,7 +13,7 @@ const attachFirebaseIDs = data => {
   let dataToReturn = [];
   let keys = Object.keys(data);
   keys.forEach(key => {
-    data[key].id = key;
+    data[key].fbID = key;
     dataToReturn.push(data[key]);
   });
   return dataToReturn;
@@ -45,6 +45,7 @@ module.exports.getFirebaseMovies = uid => {
       url: `${dbURL}.json?orderBy="uid"&equalTo=${uid}`
     })
     .done(data => {
+      console.log("this should be the data in the .done", data);
       let dataWithFBIds = attachFirebaseIDs(data);
       resolve(dataWithFBIds);
     })
@@ -60,7 +61,7 @@ module.exports.postFirebaseMovie = movieObj => {
       method: "POST",
       data: JSON.stringify(movieObj)
     }).done((result) => {
-      $("#tester-card").attr("id", result.name);
+      $("#tester-card").attr("id", result.name); // this attaches the firebase id to the tester dom element
       resolve();
     });
   });

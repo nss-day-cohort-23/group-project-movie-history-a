@@ -29,6 +29,13 @@ function testFirebase(){
     controller.clickDeleteMovie(($(this).parent().attr("id")));
   });
 
+
+  // this should console log all of the user's movies (so, like, one dummy movie), but won't filter them yet
+  $("#my-movies-searchbar").keyup(function (e) {
+    if (e.keyCode === 13) {
+      controller.enterSearchMyMovies();
+    }
+  });
 }
 
 testFirebase();
