@@ -39,8 +39,8 @@ module.exports.enterSearchMyMovies = uid => {
 // passing search term to FB call
     model.getFirebaseMovies(uid)
 // takes returned data filtered by UID to filter through by search term & print to DOM
-    .then(userData => {
-        console.log("this should be the userData", userData);
+    .then(allMovies => {
+        console.log("this should be ALL of a user's movies", allMovies);
         // let filteredData = model.filterByParameter(userData, searchTerm);
         // view.printCards(filteredData);
     });
@@ -65,14 +65,12 @@ module.exports.clickShowWatched = uid => {
 module.exports.clickAddToWatchList = () => {
 // if user is not logged in, alert user to log the f in
 // otherwise...take the movie the picked and send it to FB to post
-    let movieObj; // = movie user clicked to add
-    movieObj = {
+    let movieObj = {
         movieID: 1234,
-        userID: 4321,
+        userID: 4321
     };
-    model.postToFB(movieObj)
-// print successmessage when movie added
-    .then(view.printSuccess());
+    model.postFirebaseMovie(movieObj);
+    // .then(view.printSuccess()); // print successmessage when movie added
 };
 
 // this should accept a firebase movie ID
@@ -85,7 +83,7 @@ module.exports.clickWatched = (fbID) => {
 
 // this should accept a firebase movie ID and a number rating from the user
 module.exports.clickRating = (fbID, rating) => {
-    rating = 2; // THIS IS FOR TESTING PURPOSES ONLY, WILL DELETE LATER
+    rating = 1; // THIS IS FOR TESTING PURPOSES ONLY, WILL DELETE LATER
     fbID = "";
     model.rateMovie(fbID, rating)
     .then(console.log("movie successfully patched!"));
@@ -110,4 +108,6 @@ module.exports.clickDeleteMovie = fbID => {
     .then(console.log("movie deleted successfully!"));
     // .then(view.removeCard(fbID));
 };
+
+
 

@@ -3,7 +3,7 @@
 const $ = require('jquery');
 
 const apiKey = require("./credentials");
-const dbURL = "https://team-a-movie-history.firebaseio.com";
+const dbURL = "https://team-a-movie-history.firebaseio.com/movies";
 
 
 const attachFirebaseIDs = data => {
@@ -59,9 +59,8 @@ module.exports.postFirebaseMovie = movieObj => {
       url: `${dbURL}.json`,
       method: "POST",
       data: JSON.stringify(movieObj)
-    }).done(fbID => {
-      console.log(fbID);
-      resolve(fbID);
+    }).done(() => {
+      resolve();
     });
   });
 };
