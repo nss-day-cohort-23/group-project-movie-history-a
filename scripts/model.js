@@ -45,7 +45,6 @@ module.exports.getFirebaseMovies = uid => {
       url: `${dbURL}.json?orderBy="uid"&equalTo=${uid}`
     })
     .done(data => {
-      console.log("this should be the data in the .done", data);
       let dataWithFBIds = attachFirebaseIDs(data);
       resolve(dataWithFBIds);
     })
