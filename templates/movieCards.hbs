@@ -1,16 +1,38 @@
-{{!-- for each card passed in --}}
+{{#each movie}}
+  {{#if watched}} and it will print as a watched movie with class of watched, rate btn, delete btn, "watched"
+      <div class="card p-2" id="{{this firebase key}} class="watched">
+        {{#if this.movie_poster_full_URL}}
+          <img src="{{this.movie_poster_full_URL}}"> 
+        {{else}} 
+          <img src="placeholderimage">
+        {{/if}}
+        <h2>{{this.movie_title}}</h2>
+          <p>Released: {{this.movie_year}}</p>
+          <p>Cast: {{this.movie_cast}}</p>
+          <p>Watched</p>
+        {{#if rating}}
+          <p>{{this.rating}}</p>
+        {{else}}
+          <button type="button" class="btn btn-secondary my-1" id = "rate">Rate</button>
+        {{/if}}
+          <button type="button" class="btn btn-secondary my-1" id = "delete">Remove Movie</button>
+      </div>
+  {{#else uid}}
+        <div class="card p-2" id="{{this firebase key}} class="un-watched">
+          {{#if this.movie_poster_full_URL}}
+            <img src="{{this.movie_poster_full_URL}}"> 
+          {{else}} 
+            <img src="placeholderimage">
+          {{/if}}
+          <h2>{{this.movie_title}}</h2>
+            <p>Released: {{this.movie_year}}</p>
+            <p>Cast: {{this.movie_cast}}</p>
+            <p>Unwatched</p>
+            <button type="button" class="btn btn-secondary my-1" id = "mark-as-watched">Mark As Watched</button>
+            <button type="button" class="btn btn-secondary my-1" id = "delete">Remove Movie</button>
+      </div>
+  {{#else}}
 
-{{!-- 
-Movie name {{this.movie_title}}
-Movie poster, if available {{this.movie_poster_full_URL}} else placeholder image
-Year released {{this.movie_year}}
-List of major actors {{this.movie_cast}}
+  else print as DB movie with class of dbMovie, add to watchlistbtn
 
-if there is a property of watched and it will print as a watched movie with class of watched, rate btn, delete btn, "watched"
-An integer rating of 1-5 {{this.rating}}
-
-else if there is a property of uid, print as unwatched movie with class of unwatched, delete btn, "not yet watched", watched btn
-
-else print as DB movie with class of dbMovie, add to watchlistbtn
-
---}}
+{{/each}}
