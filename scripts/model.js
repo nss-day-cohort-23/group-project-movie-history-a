@@ -69,7 +69,7 @@ module.exports.searchMovieDB = userQuery => {
 
 module.exports.getPopularMoviesFromMovieDB = () => {
   // GET Promise to themoviedb.org their 'popular' movies data.
-  console.log('apiKey: ',apiKey);
+  // console.log('apiKey: ',apiKey);
   return new Promise((resolve, reject)=>{
     let popularMoviesArray = [];
     $.ajax({

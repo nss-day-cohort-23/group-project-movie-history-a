@@ -11,8 +11,10 @@ module.exports.populatePage = () => {
     view.printHomepage();
     activateListeners();
     // call to API to get Top Rated movies, then pass Top Rated Movies to print to DOM
-    model.getPopularMovies(); 
-    // .then(data => printCards(data))
+    model.getPopularMoviesFromMovieDB()
+    .then((popularMovies) => {
+        view.printCards(popularMovies);
+    }); 
 };
 
 const activateListeners = () =>{

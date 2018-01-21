@@ -1,24 +1,10 @@
-{{#each movie}}
-  {{#if watched}} and it will print as a watched movie with class of watched, rate btn, delete btn, "watched"
-      <div class="card p-2" id="{{this firebase key}} class="watched">
-        {{#if this.movie_poster_full_URL}}
-          <img src="{{this.movie_poster_full_URL}}"> 
-        {{else}} 
-          <img src="placeholderimage">
-        {{/if}}
-        <h2>{{this.movie_title}}</h2>
-          <p>Released: {{this.movie_year}}</p>
-          <p>Cast: {{this.movie_cast}}</p>
-          <p>Watched</p>
-        {{#if rating}}
-          <p>{{this.rating}}</p>
-        {{else}}
-          <button type="button" class="btn btn-secondary my-1" id = "rate">Rate</button>
-        {{/if}}
-          <button type="button" class="btn btn-secondary my-1" id = "delete">Remove Movie</button>
-      </div>
-  {{#else uid}}
-        <div class="card p-2" id="{{this firebase key}} class="un-watched">
+<div class="row">
+  <p>trying to print outside data loop</p>
+  {{#each movieData}}
+    <p>Trying to Print</p>
+{{!-- checking to see if movie object has watched property, if so, adding as watched movie --}}
+    {{#if watched}}
+        <div class="card p-2" id="needs_FB_Key" class="watched">
           {{#if this.movie_poster_full_URL}}
             <img src="{{this.movie_poster_full_URL}}"> 
           {{else}} 
@@ -27,12 +13,42 @@
           <h2>{{this.movie_title}}</h2>
             <p>Released: {{this.movie_year}}</p>
             <p>Cast: {{this.movie_cast}}</p>
-            <p>Unwatched</p>
-            <button type="button" class="btn btn-secondary my-1" id = "mark-as-watched">Mark As Watched</button>
+            <p>Watched</p>
+          {{#if rating}}
+            <p>{{this.rating}}</p>
+          {{else}}
+            <button type="button" class="btn btn-secondary my-1" id = "rate">Rate</button>
+          {{/if}}
             <button type="button" class="btn btn-secondary my-1" id = "delete">Remove Movie</button>
-      </div>
-  {{#else}}
-
-  else print as DB movie with class of dbMovie, add to watchlistbtn
-
-{{/each}}
+        </div>
+{{!-- if the movie received does not have watched property, but has uid property, adding as unwatched user movie --}}
+    {{else if uid}}
+          <div class="card p-2" id="needs_FB_Key" class="un-watched">
+            {{#if this.movie_poster_full_URL}}
+              <img src="{{this.movie_poster_full_URL}}"> 
+            {{else}} 
+              <img src="placeholderimage">
+            {{/if}}
+            <h2>{{this.movie_title}}</h2>
+              <p>Released: {{this.movie_year}}</p>
+              <p>Cast: {{this.movie_cast}}</p>
+              <p>Unwatched</p>
+              <button type="button" class="btn btn-secondary my-1" id = "mark-as-watched">Mark As Watched</button>
+              <button type="button" class="btn btn-secondary my-1" id = "delete">Remove Movie</button>
+        </div>
+{{!-- if movie received has neither uid or watched as properties, prints as movie database movie --}}
+    {{else}}
+          <div class="card p-2" id="{{this.movie_id}}" class="dbMovie">
+            {{#if this.movie_poster_full_URL}}
+              <img src="{{this.movie_poster_full_URL}}"> 
+            {{else}} 
+              <img src="placeholderimage">
+            {{/if}}
+            <h2>{{this.movie_title}}</h2>
+              <p>Released: {{this.movie_year}}</p>
+              <p>Cast: {{this.movie_cast}}</p>
+              <button type="button" class="btn btn-secondary my-1" id = "add">Add Movie</button>
+        </div>
+    {{/if}}
+  {{/each}}
+</div>

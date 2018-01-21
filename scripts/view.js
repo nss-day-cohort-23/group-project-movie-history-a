@@ -31,6 +31,9 @@ module.exports.printHomepage = () => {
 
 
 module.exports.printCards = movieData => {
+  console.log(movieData);
+  const cardsTemplate = require("../templates/movieCards.hbs");
+  $("#popular-movies").append(cardsTemplate(movieData));
   // Prints each card to the DOM in the body container given movieData
   // 
 };
