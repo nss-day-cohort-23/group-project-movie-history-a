@@ -111,7 +111,10 @@ module.exports.clickRating = (fbID, ratingObj) => {
 
 module.exports.clickLogOut = () => {
 // pls rvw fb docs/joe's code example to include firebase method to log a user out
-    model.getPopularMovies()
+  logout()
+    .then()
+    .catch();
+  model.getPopularMovies()
     .then(data => view.printCards(data));
 // removes elements that only logged in users have access to
     view.removeMyMoviesSearch();
