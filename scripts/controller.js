@@ -9,9 +9,26 @@ module.exports.populatePage = () => {
     // view.printFooter();
     // view.printBody();
     view.printHomepage();
+    activateListeners();
     // call to API to get Top Rated movies, then pass Top Rated Movies to print to DOM
-    // model.getPopularMovies()
+    model.getPopularMovies(); 
     // .then(data => printCards(data))
+};
+
+const activateListeners = () =>{
+    $("#db-searchbar").keyup(function(e){
+        if(e.keyCode === 13){
+            let userQuery = this.value;
+            model.searchMovieDB(userQuery)
+            .then(moviesArray=>{
+                console.log('moviesArray: ',moviesArray);
+                // view.printCards(moviesArray);
+            });
+        }
+    });
+    $(document).on("click", ".addToItinerary", function(){
+        
+    });
 };
 
 module.exports.clickLogin = () => {

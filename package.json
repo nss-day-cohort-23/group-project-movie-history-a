@@ -1,5 +1,5 @@
 {
-    "name": "Movie-history",
+    "name": "moviehistory",
     "version": "1.0.0",
     "description": "An assignment for NSS",
     "main": "Gruntfile.js",
@@ -20,5 +20,13 @@
         "hbsfy": "^2.8.1",
         "jquery": "^3.2.1",
         "matchdep": "^2.0.0"
-    }
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/nss-day-cohort-23/group-project-movie-history-a.git"
+    },
+    "bugs": {
+      "url": "https://github.com/nss-day-cohort-23/group-project-movie-history-a/issues"
+    },
+    "homepage": "https://github.com/nss-day-cohort-23/group-project-movie-history-a#readme"
 }
