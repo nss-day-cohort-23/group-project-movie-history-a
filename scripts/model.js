@@ -59,7 +59,9 @@ module.exports.postFirebaseMovie = movieObj => {
       url: `${dbURL}.json`,
       method: "POST",
       data: JSON.stringify(movieObj)
-    }).done(() => {
+    }).done((result) => {
+      console.log("this should be the firebase id", result);
+      $("#tester-card").attr("id", result.name);
       resolve();
     });
   });

@@ -12,15 +12,17 @@ function testFirebase(){
   });
 
   $('#mark-as-watched').click(function(){
+    controller.clickWatched();
 
   });
 
   $('#rate').click(function(){
+    controller.clickRating();
 
   });
 
   $('#delete').click(function(){
-
+    controller.clickDeleteMovie();
   });
 
 }
