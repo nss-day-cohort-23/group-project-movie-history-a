@@ -33,7 +33,7 @@ module.exports.printHomepage = () => {
 module.exports.printCards = movieData => {
   console.log(movieData, "receives array of movie objects");
   const cardsTemplate = require("../templates/movieCards.hbs");
-  $("#popular-movies").html(cardsTemplate({"movies": movieData}));
+  $("#popular-movies").append(cardsTemplate({"movies": movieData}));
     // $("#popular-movies").html(cardsTemplate(movieData));
 };
 
