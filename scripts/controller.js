@@ -75,7 +75,6 @@ module.exports.clickAddToWatchList = () => {
 
 // this should accept a firebase movie ID
 module.exports.clickWatched = (fbID) => {
-    fbID = "";
     model.markAsWatched(fbID)
     .then(console.log("you successfully marked this movie as watched!"));
     // .then(view.printSuccess());
@@ -83,8 +82,6 @@ module.exports.clickWatched = (fbID) => {
 
 // this should accept a firebase movie ID and a number rating from the user
 module.exports.clickRating = (fbID, rating) => {
-    rating = 1; // THIS IS FOR TESTING PURPOSES ONLY, WILL DELETE LATER
-    fbID = "";
     model.rateMovie(fbID, rating)
     .then(console.log("movie successfully patched!"));
     // .then(view.printStars(ratingObj));
@@ -104,7 +101,7 @@ module.exports.clickLogOut = () => {
 // pass firebase ID of movie user clicked to delete and remove from FB,
 // then remove from DOM
 module.exports.clickDeleteMovie = fbID => {
-    model.deleteFirebase(fbID)
+    model.deleteFirebaseMovie(fbID)
     .then(console.log("movie deleted successfully!"));
     // .then(view.removeCard(fbID));
 };
