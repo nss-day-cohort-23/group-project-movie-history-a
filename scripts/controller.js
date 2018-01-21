@@ -26,6 +26,9 @@ const activateListeners = () =>{
             });
         }
     });
+    $(document).on("click", ".addToItinerary", function(){
+        
+    });
 };
 
 module.exports.clickLogin = () => {
