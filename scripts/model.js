@@ -84,7 +84,7 @@ module.exports.markAsWatched = fbID => {
   });
 };
 
-// returns a promise that sets a 
+// returns a promise that should add or update the 'rating' property on a movie object in firebase
 module.exports.rateMovie = (fbID, rating) => {
   return new Promise((resolve, reject) => {
     $.ajax({
