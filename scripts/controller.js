@@ -61,26 +61,28 @@ const activateListeners = () => {
 
 
 function searchForMovies() {
-
     const userQuery = $('#searchbar').val();
-    const moviesToPrint = [];
+    let databaseMovies = [];
+    let firebaseMovies = [];
     const user = firebase.auth().currentUser;
-    console.log("this should be the user", user);
+    console.log("user id", user.uid);
     model.searchMovieDB(userQuery)
         .then(dbMovies => {
-            setTimeout(() => {
-                // moviesToPrint.push(dbMovies);
-                // console.log("this should be the movies to print array", moviesToPrint);
-                view.printCards(dbMovies);
-            }, 1500);
-        });
-  
-            // return model.getFirebaseMovies();
-       
-        // .then(allFBMovies => {
-
-        // });
-    
+            databaseMovies = dbMovies; // store in global variable
+            return model.getFirebaseMovies(4321);  // set to dummy variable right now
+        })
+        .then(fbMovies => {
+            console.log("this should be ALL of the user's movies", fbMovies);
+            fbMovies.forEach(fbMovie => {
+                databaseMovies.forEach(dbMovie => {
+                    if (fbMovie.movieID == dbMovie.id){
+                        firebaseMovies.push(fbMovie);
+                    }
+                });
+            });
+            view.printCards(databaseMovies);
+            view.printCards(firebaseMovies);
+        });     
 }
 
 // module.exports.enterSearchMyMovies = uid => {

@@ -61,8 +61,8 @@ module.exports.searchMovieDB = userQuery => {
            searchResults.push(movieResult);
          }); // end of cast forEach
       });
+      resolve(searchResults);
     });
-    resolve(searchResults);
   }); // end of Promise
 };
 
