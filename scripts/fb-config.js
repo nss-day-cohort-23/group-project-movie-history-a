@@ -6,7 +6,7 @@ const firebase = require("firebase/app");
 require("firebase/auth");
 
 const config = {
-  apiKey: creds.firebaseCreds.apiKey,
+  apiKey: creds.firebaseCreds.fbApiKey,
   authDomain: creds.firebaseCreds.authDomain
 };
 

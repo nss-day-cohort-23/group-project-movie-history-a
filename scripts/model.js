@@ -2,9 +2,8 @@
 
 const $ = require('jquery');
 
-const apiKey = require("./credentials");
+const creds = require("./credentials");
 const dbURL = "https://team-a-movie-history.firebaseio.com/movies";
-
 
 let movieExampleObject = {
   movie_id: "movie.movie_id",
@@ -41,12 +40,12 @@ module.exports.searchMovieDB = userQuery => {
   return new Promise((resolve, reject)=>{
     let searchResults = [];
     $.ajax({
-      url:`https://api.themoviedb.org/3/search/movie?api_key=${apiKey.apiKey}&language=en-US&query=${userQuery}&page=1&include_adult=false`
+      url:`https://api.themoviedb.org/3/search/movie?api_key=${creds.mdbApiKey}&language=en-US&query=${userQuery}&page=1&include_adult=false`
     }).done(movies=>{
       movies.results.forEach(movie=>{
          let movieYear = movie.release_date.slice(0, 4);
          $.ajax({
-           url: `https://api.themoviedb.org/3/movie/${movie.id}/credits?api_key=${apiKey.apiKey}`
+           url: `https://api.themoviedb.org/3/movie/${movie.id}/credits?api_key=${creds.mdbApiKey}`
          }).done((cast)=>{
            let movieTopBilledActorsArray = [];
            cast.cast.forEach(castMember=>movieTopBilledActorsArray.push(castMember.name));
@@ -69,17 +68,16 @@ module.exports.searchMovieDB = userQuery => {
 
 module.exports.getPopularMovies = () => {
   // GET Promise to themoviedb.org their 'popular' movies data.
-  console.log('apiKey: ',apiKey);
   return new Promise((resolve, reject)=>{
     let popularMoviesArray = [];
     $.ajax({
-      url: `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey.apiKey}&language=en-US&page=1`
+      url: `https://api.themoviedb.org/3/movie/popular?api_key=${creds.mdbApiKey}&language=en-US&page=1`
     }).done((popularMovies)=>{
       let moviesArray = [];
       popularMovies.results.forEach((movie)=>{
         let movieYear = movie.release_date.slice(0, 4);
         $.ajax({
-          url: `https://api.themoviedb.org/3/movie/${movie.id}/credits?api_key=${apiKey.apiKey}`
+          url: `https://api.themoviedb.org/3/movie/${movie.id}/credits?api_key=${creds.mdbApiKey}`
         }).done((cast)=>{
           let movieTopBilledActorsArray = [];
           cast.cast.forEach(castMember=>movieTopBilledActorsArray.push(castMember.name));
