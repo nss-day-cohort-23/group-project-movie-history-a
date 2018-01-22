@@ -50,22 +50,22 @@ const clickLogin = () => {
 };
 
 const activateListeners = () => {
-    $("#db-searchbar").keyup(function(e) {
-      if (e.keyCode === 13) {
-        let userQuery = this.value;
-        model.searchMovieDB(userQuery)
-          .then(moviesArray => {
-            setTimeout(() => {
-                view.printCards(moviesArray);
-            }, 1500);
-          });
-      }
-    });
-    $(document).on("click", "#add", function() {
-  
-    });
-    $("#loginBtn").click(clickLogin);
-  };
+  $("#searchbar").keyup(function(e) {
+    if (e.keyCode === 13) {
+      let userQuery = this.value;
+      model.searchMovieDB(userQuery)
+        .then(moviesArray => {
+              setTimeout(() => {
+                  view.printCards(moviesArray);
+              }, 1500);
+        });
+    }
+  });
+  $(document).on("click", ".addToItinerary", function() {
+
+  });
+  $(document).on("click", "#loginBtn", clickLogin);
+};
 
 
 module.exports.enterSearchForMovies = () => {

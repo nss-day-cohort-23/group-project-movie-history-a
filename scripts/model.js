@@ -50,7 +50,7 @@ module.exports.searchMovieDB = userQuery => {
            let movieTopBilledActorsArray = [];
            cast.cast.forEach(castMember=>movieTopBilledActorsArray.push(castMember.name));
            let topActors = movieTopBilledActorsArray.slice(0, 3).join(", ");
-           let moviePosterURL = `https://image.tmdb.org/t/p/w342/${movie.poster_path}`;
+           let moviePosterURL = `https://image.tmdb.org/t/p/w342${movie.poster_path}`;
            let movieResult = {
              movie_title: movie.title,
              movie_id: movie.id,
@@ -82,7 +82,7 @@ module.exports.getPopularMovies = () => {
           let movieTopBilledActorsArray = [];
           cast.cast.forEach(castMember=>movieTopBilledActorsArray.push(castMember.name));
           let topActors = movieTopBilledActorsArray.slice(0, 3).join(", ");
-          let moviePosterURL = `https://image.tmdb.org/t/p/w342/${movie.poster_path}`;
+          let moviePosterURL = `https://image.tmdb.org/t/p/w342${movie.poster_path}`;
           let popMovie = {
             movie_title: movie.title,
             movie_id: movie.id,

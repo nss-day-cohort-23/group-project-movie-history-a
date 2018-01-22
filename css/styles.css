@@ -1,21 +1,23 @@
 .toggle-nav {
   display: flex;
   justify-content: center; }
-  .toggle-nav .show-watched, .toggle-nav .show-unwatched {
+  .toggle-nav button {
     border-radius: 0;
     background-color: white;
     border: 1px solid gray;
     color: black;
-    width: 25vw; }
+    width: 20vw;
+    font-size: 0.7em; }
 
-.search {
+.header-container {
   display: flex;
-  justify-content: center; }
-  .search .db-searchbar, .search .my-movies-searchbar {
-    width: 40vw;
-    margin: 2em 0.5em 0em 0.5em; }
+  justify-content: space-between;
+  padding: 2em; }
+  .header-container .searchbar {
+    width: 60vw;
+    height: 4em; }
 
-.popular-movies {
+.movies {
   width: 80vw;
   height: 65vh;
   margin: 2em auto;
