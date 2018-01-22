@@ -39,7 +39,7 @@ const clickLogin = () => {
 };
 
 const activateListeners = () => {
-  $("#db-searchbar").keyup(function(e) {
+  $("#searchbar").keyup(function(e) {
     if (e.keyCode === 13) {
       let userQuery = this.value;
       model.searchMovieDB(userQuery)

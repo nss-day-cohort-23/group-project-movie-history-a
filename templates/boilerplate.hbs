@@ -1,25 +1,25 @@
-<nav class="navbar navbar-expand-sm navbar-light bg-faded">
-    <div class="nav navbar-nav">
-        <a class="nav-item nav-link active" href="#">Find New Movies</a>
-        <a class="nav-item nav-link" href="#">Search Your Movies</a>
-        <a id="loginBtn" class="nav-item nav-link" href="#">Login</a>
-    </div>
+<div class = "header-container">
+    <input class="form-control searchbar" id="searchbar" type="text" placeholder="Search through the Movie Database">
+    <button type="button" class="btn btn-secondary btn-lg show-unwatched" id="show-unwatched">Login</button>
+</div>
+
+<nav class="breadcrumb">
+    <a class="breadcrumb-item" href="#">Movie History</a>
+    <span class="breadcrumb-item active" id = "current-section">Current Section</span>
 </nav>
 
-<h1 class="px-4">Movie History</h1>
 
 <div class="toggle-nav">
-    <button type="button" class="btn btn-secondary btn-lg show-unwatched" id="show-unwatched">Show Unwatched</button>
-    <button type="button" class="btn btn-secondary btn-lg show-watched" id="show-watched">Show Watched</button>
+    <button type="button" class="btn btn-secondary show-unwatched" id="untracked">Show Untracked</button>
+    <button type="button" class="btn btn-secondary show-watched" id="unwatched">Show Unwatched</button>
+    <button type="button" class="btn btn-secondary show-watched" id="watched">Show Watched</button>
+    <button type="button" class="btn btn-secondary show-watched" id="favorites">Favorites</button>
 </div>
 
-<div class="search">
-    <input class="form-control db-searchbar" id="db-searchbar" type="text" placeholder="Search through the Movie Database">
-    <input class="form-control my-movies-searchbar" id="my-movies-searchbar" type="text" placeholder="Search My Movies">
-</div>
 
-<div class="container popular-movies" id="popular-movies">
-    <div class="row">
+
+<div class="container" id = "movies">
+    <div class="row" id = "movie-container">
     
     </div>
 </div>
