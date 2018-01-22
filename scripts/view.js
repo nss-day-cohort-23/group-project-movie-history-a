@@ -1,6 +1,8 @@
 "use strict";
 
 const $ = require("jquery");
+const firebase = require("./fb-config");
+
 // Include all Handlebars templates/partials.
 
 // The following appears to be the beginning of the URL for imgs hosted on
@@ -12,6 +14,7 @@ const $ = require("jquery");
 module.exports.printHomepage = () => {
   const homepageTemplate = require("../templates/boilerplate.hbs");
   $("#container").append(homepageTemplate());
+  
 };
 
 
@@ -27,24 +30,14 @@ module.exports.removeCard = fbID => {
   // Removes movie card from DOM using fbID
 };
 
-module.exports.printLogOut = () => {
-  // Prints logout btn in navbar
-  // Potentially combined with other login/logout btn fn() (i.e., toggleLoginOutBtns)
-};
-
-module.exports.removeLogoutBtn = () => {
-  // Removes logout btn from navbar
-  // Potentially combined with other login/logout btn fn() (i.e., toggleLoginOutBtns)
-};
-
-module.exports.printLoginBtn = () => {
-  // Prints login btn in navbar
-  // Potentially combined with printLogoutBtn (i.e., toggleLoginOutBtns)
-};
-
-module.exports.removeLoginBtn = () => {
-  // Removes login btn from navbar
-  // Potentially combined with other login/logout btn fn() (i.e., toggleLoginOutBtns)
+module.exports.toggleLoginButton = () =>{
+  if(firebase.auth().currentUser!=null){
+    $("#loginBtn").hide();
+    $("#logoutBtn").show();
+  } else if(firebase.auth().currentUser===null){
+    $("#logoutBtn").hide();
+    $("#loginBtn").show();
+  }
 };
 
 module.exports.printMyMoviesSearch = () => {

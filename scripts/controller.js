@@ -14,14 +14,31 @@ module.exports.populatePage = () => {
         setTimeout(() => {
             view.printCards(data);
         }, 1500);
+        view.toggleLoginButton();
     });
+    
 };
 
 const logout = () => {
   return firebase.auth().signOut();
+  
 };
 
-const authUser = key => {
+const clickLogout = () => {
+    logout()
+        .then(result=>{
+            setTimeout(function(){
+                view.toggleLoginButton();
+                console.log('Successful Logout!!!');
+                console.log('currentUser: ',firebase.auth().currentUser);
+            }, 500);
+        })
+        .catch(error=>{
+            console.log('Failure Loggin Out!!!');
+        });
+};
+
+const authUser = () => {
   const provider = new firebase.auth.GoogleAuthProvider();
 
   return firebase.auth().signInWithPopup(provider);
@@ -32,12 +49,13 @@ const clickLogin = () => {
   console.log("clicked login!");
   authUser()
     .then(result => {
-      console.log("Success!");
+      console.log("Successful Login!");
       let user = result.user;
       let uid = user.uid;
+      view.toggleLoginButton();
     })
     .catch(error => {
-      console.log("Failure!");
+      console.log("Failure Logging In!");
       let errorCode = error.code;
       let errorMessage = error.message;
     });
@@ -45,23 +63,25 @@ const clickLogin = () => {
   // view.printToggle();
   // prints search bar to search My Movies
   view.printMyMoviesSearch();
-  view.removeLoginBtn();
-  view.printLogOut();
+  view.toggleLoginButton();
 };
 
 const activateListeners = () => {
+
   $("#searchbar").keyup(function(e) {
     if (e.keyCode === 13) {
         searchForMovies();
         }
     });
-
-    $("#loginBtn").click(clickLogin);
-
-    $(document).on("click", ".add", function () {
-        let selectedMovieId = $(this).parent().attr('id');
-        clickAddToWatchList(selectedMovieId); 
+     
+  $(document).on("click", ".add-to-watchlist", function() {
+      let selectedMovieId = $(this).parent().attr('id');
+      clickAddToWatchList(selectedMovieId);
     });
+
+  $(document).on("click", "#loginBtn", clickLogin);
+  $(document).on("click", "#logoutBtn", clickLogout);
+
 };
 
 
@@ -122,31 +142,12 @@ const clickAddToWatchList = (movieToAdd) => {
     }
 };
 
-// this should accept a firebase movie ID
-module.exports.clickWatched = (fbID) => {
-    model.markAsWatched(fbID);
-    // .then(view.printSuccess());
-};
-
 // this should accept a firebase movie ID and a number rating from the user
 module.exports.clickRating = (fbID, rating) => {
     model.rateMovie(fbID, rating);
     // .then(view.printStars(ratingObj));
 };
 
-module.exports.clickLogOut = () => {
-// pls rvw fb docs/joe's code example to include firebase method to log a user out
-  logout()
-    .then()
-    .catch();
-  model.getPopularMovies()
-    .then(data => view.printCards(data));
-// removes elements that only logged in users have access to
-    view.removeMyMoviesSearch();
-    view.removeLogOut();
-    view.printLogin();
-    view.removeToggle();
-};
 
 // pass firebase ID of movie user clicked to delete and remove from FB,
 // then remove from DOM
