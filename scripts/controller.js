@@ -78,9 +78,7 @@ const activateListeners = () => {
         });
     }
   });
-  $(document).on("click", ".addToItinerary", function() {
 
-  });
   $(document).on("click", "#loginBtn", clickLogin);
   $(document).on("click", "#logoutBtn", clickLogout);
 
