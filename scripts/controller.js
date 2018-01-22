@@ -61,7 +61,6 @@ const activateListeners = () => {
         });
     }
   });
-//   $(document).on("click", ".add", clickAddToWatchList);
   $(document).on("click", ".add", function() {
       let selectedMovieId = $(this).parent().attr('id');
       clickAddToWatchList(selectedMovieId);
@@ -109,16 +108,19 @@ module.exports.clickShowWatched = uid => {
 
 const clickAddToWatchList = (movieToAdd) => {
     let currentUser = firebase.auth().currentUser.uid;
+// testing for current user, if no user they cannot add movie
     if (currentUser === null) {
         alert("Sign In To Use This Premium Feature");
     }
-    let movieObj = {
-        movieID: movieToAdd,
-        uid: currentUser
-    };
-    console.log(movieObj);
-    model.postFirebaseMovie(movieObj)
-    .then(view.printSuccessMsg());
+    else {
+        let movieObj = {
+            movieID: movieToAdd,
+            uid: currentUser
+        };
+        console.log(movieObj);
+        model.postFirebaseMovie(movieObj)
+        .then(view.printSuccessMsg());
+    }
 };
 
 // this should accept a firebase movie ID
