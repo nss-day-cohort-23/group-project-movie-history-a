@@ -81,8 +81,8 @@ module.exports.enterSearchMyMovies = uid => {
 // passing search term to FB call
     model.getFirebaseMovies(uid)
 // takes returned data filtered by UID to filter through by search term & print to DOM
-    .then(userData => {
-        let filteredData = model.filterByParameter(userData, searchTerm);
+    .then(allMovies => {
+        let filteredData = model.filterByParameter(allMovies, searchTerm);
         view.printCards(filteredData);
     });
 };
@@ -106,22 +106,24 @@ module.exports.clickShowWatched = uid => {
 module.exports.clickAddToWatchList = () => {
 // if user is not logged in, alert user to log the f in
 // otherwise...take the movie the picked and send it to FB to post
-    let movieObj; // = movie user clicked to add
-    model.postToFB(movieObj)
-// print successmessage when movie added
-    .then(view.printSuccess());
+    let movieObj = {
+        movieID: 1234,
+        uid: 4321
+    };
+    model.postFirebaseMovie(movieObj);
+    // .then(view.printSuccess()); // print successmessage when movie added
 };
 
-module.exports.clickWatched = (fbID, watchedBoolean) => {
-// pass in firebase ID of movie and new boolean value for watched to patch to FB
-    model.patchFirebase(fbID, watchedBoolean)
-    .then(view.printSuccess());
+// this should accept a firebase movie ID
+module.exports.clickWatched = (fbID) => {
+    model.markAsWatched(fbID);
+    // .then(view.printSuccess());
 };
 
-module.exports.clickRating = (fbID, ratingObj) => {
-// get value of what user selected as their rating and pass as object to patchFB
-    model.patchFirebase(fbID, ratingObj)
-    .then(view.printStars(ratingObj));
+// this should accept a firebase movie ID and a number rating from the user
+module.exports.clickRating = (fbID, rating) => {
+    model.rateMovie(fbID, rating);
+    // .then(view.printStars(ratingObj));
 };
 
 module.exports.clickLogOut = () => {
@@ -138,9 +140,12 @@ module.exports.clickLogOut = () => {
     view.removeToggle();
 };
 
-module.exports.clickDeleteMovie = fbID => {
 // pass firebase ID of movie user clicked to delete and remove from FB,
 // then remove from DOM
-    model.deleteFirebase(fbID)
-    .then(view.removeCard(fbID));
+module.exports.clickDeleteMovie = fbID => {
+    model.deleteFirebaseMovie(fbID);
+    // .then(view.removeCard(fbID));
 };
+
+
+
