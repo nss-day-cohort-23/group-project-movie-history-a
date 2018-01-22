@@ -52,7 +52,7 @@ const activateListeners = () => {
   $(document).on("click", ".addToItinerary", function() {
 
   });
-  $(document).on("click", "#loginBtn", clickLogin);
+  $("#loginBtn").click(clickLogin);
 };
 
 module.exports.populatePage = () => {
