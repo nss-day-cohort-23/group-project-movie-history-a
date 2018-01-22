@@ -13,8 +13,8 @@ module.exports.populatePage = () => {
     .then(data => {
         setTimeout(() => {
             view.printCards(data);
+            view.toggleLoginButton();
         }, 1500);
-        view.toggleLoginButton();
     });
     
 };
