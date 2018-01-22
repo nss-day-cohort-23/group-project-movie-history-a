@@ -61,9 +61,10 @@ const activateListeners = () => {
         });
     }
   });
-  $(document).on("click", ".addToItinerary", function() {
-
-  });
+  $(document).on("click", ".add", function() {
+      let selectedMovieId = $(this).parent().attr('id');
+      clickAddToWatchList(selectedMovieId);
+});
   $(document).on("click", "#loginBtn", clickLogin);
 };
 
@@ -105,15 +106,21 @@ module.exports.clickShowWatched = uid => {
     });
 };
 
-module.exports.clickAddToWatchList = () => {
-// if user is not logged in, alert user to log the f in
-// otherwise...take the movie the picked and send it to FB to post
-    let movieObj = {
-        movieID: 1234,
-        uid: 4321
-    };
-    model.postFirebaseMovie(movieObj);
-    // .then(view.printSuccess()); // print successmessage when movie added
+const clickAddToWatchList = (movieToAdd) => {
+    let currentUser = firebase.auth().currentUser.uid;
+// testing for current user, if no user they cannot add movie
+    if (currentUser === null) {
+        alert("Sign In To Use This Premium Feature");
+    }
+    else {
+        let movieObj = {
+            movieID: movieToAdd,
+            uid: currentUser
+        };
+        console.log(movieObj);
+        model.postFirebaseMovie(movieObj)
+        .then(view.printSuccessMsg());
+    }
 };
 
 // this should accept a firebase movie ID
