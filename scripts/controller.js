@@ -93,7 +93,8 @@ function searchForMovies() {
     model.searchMovieDB(userQuery)
         .then(dbMovies => {
             databaseMovies = dbMovies; // store in global variable
-            return model.getFirebaseMovies(uid);  // set to dummy variable right now
+            return model.getFirebaseMovies(uid);  // this returns a 400 bad requiest because it doesn't like the uid you're passing in
+            // if you run return model.getFirebaseMovies(4321) then it returns all the movies with the user id 4321 (all the dummy data)
         })
         .then(fbMovies => {
             console.log("this should be ALL of the user's movies", fbMovies);
