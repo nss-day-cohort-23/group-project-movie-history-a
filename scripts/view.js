@@ -25,7 +25,6 @@ const $ = require("jquery");
 
 // TEMPORARY FIX- this prints the entire template with everything showing. I'm break it out into partials that we can hide/ show according to logged in state later today, but for now here's hte basics so everybody can get started
 module.exports.printHomepage = () => {
-  console.log("this function was fired!");
   const homepageTemplate = require("../templates/boilerplate.hbs");
   $("#container").append(homepageTemplate());
 };
