@@ -55,8 +55,9 @@ const activateListeners = () => {
       let userQuery = this.value;
       model.searchMovieDB(userQuery)
         .then(moviesArray => {
-          console.log('moviesArray: ', moviesArray);
-          // view.printCards(moviesArray);
+              setTimeout(() => {
+                  view.printCards(moviesArray);
+              }, 1500);
         });
     }
   });
