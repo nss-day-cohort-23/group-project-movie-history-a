@@ -34,7 +34,12 @@ module.exports.printCards = movieData => {
   const cardsTemplate = require("../templates/movieCards.hbs");
   $("#movie-container").empty();
   movieData.forEach( (movie) => {
-  $("#movie-container").append(cardsTemplate(movie));
+    $("#movie-container").append(cardsTemplate(movie));
+    if(movie.rating) {
+      for (let i = 0; i < movie.rating; i++) {
+        $(`div#${movie.movie_id} .stars .star-${i} svg`).toggleClass("star-unrated star-rated");
+      }
+    }
   });
   console.log(movieData, "receives array of movie objects");
 };
