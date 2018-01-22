@@ -1,44 +1,69 @@
 "use strict";
 
 const $ = require("jquery");
+const firebase = require("./fb-config");
 const model = require('./model');
 const view = require('./view');
 
+
+const logout = () => {
+  return firebase.auth().signOut();
+};
+
+const authUser = key => {
+  const provider = new firebase.auth.GoogleAuthProvider();
+
+  return firebase.auth().signInWithPopup(provider);
+};
+
+const clickLogin = () => {
+  // function to pop up google authentication with firebase
+  console.log("clicked login!");
+  authUser()
+    .then(result => {
+      console.log("Success!");
+      let user = result.user;
+      let uid = user.uid;
+    })
+    .catch(error => {
+      console.log("Failure!");
+      let errorCode = error.code;
+      let errorMessage = error.message;
+    });
+  // once authenticated, watched/unwatched toggle button will populate with below function
+  // view.printToggle();
+  // prints search bar to search My Movies
+  view.printMyMoviesSearch();
+  view.removeLoginBtn();
+  view.printLogOut();
+};
+
+const activateListeners = () => {
+  $("#db-searchbar").keyup(function(e) {
+    if (e.keyCode === 13) {
+      let userQuery = this.value;
+      model.searchMovieDB(userQuery)
+        .then(moviesArray => {
+          console.log('moviesArray: ', moviesArray);
+          // view.printCards(moviesArray);
+        });
+    }
+  });
+  $(document).on("click", ".addToItinerary", function() {
+
+  });
+  $(document).on("click", "#loginBtn", clickLogin);
+};
+
 module.exports.populatePage = () => {
-    // view.printNav();
-    // view.printFooter();
-    // view.printBody();
-    view.printHomepage();
-    activateListeners();
-    // call to API to get Top Rated movies, then pass Top Rated Movies to print to DOM
-    model.getPopularMovies(); 
-    // .then(data => printCards(data))
-};
-
-const activateListeners = () =>{
-    $("#db-searchbar").keyup(function(e){
-        if(e.keyCode === 13){
-            let userQuery = this.value;
-            model.searchMovieDB(userQuery)
-            .then(moviesArray=>{
-                console.log('moviesArray: ',moviesArray);
-                // view.printCards(moviesArray);
-            });
-        }
-    });
-    $(document).on("click", ".addToItinerary", function(){
-        
-    });
-};
-
-module.exports.clickLogin = () => {
-// function to pop up google authentication with firebase
-// once authenticated, watched/unwatched toggle button will populate with below function
-    view.printToggle();
-// prints search bar to search My Movies
-    view.printMyMoviesSearch();
-    view.removeLoginBtn();
-    view.printLogOut();
+  // view.printNav();
+  // view.printFooter();
+  // view.printBody();
+  view.printHomepage();
+  activateListeners();
+  // call to API to get Top Rated movies, then pass Top Rated Movies to print to DOM
+  model.getPopularMovies();
+  // .then(data => printCards(data))
 };
 
 module.exports.enterSearchForMovies = () => {
@@ -101,7 +126,10 @@ module.exports.clickRating = (fbID, ratingObj) => {
 
 module.exports.clickLogOut = () => {
 // pls rvw fb docs/joe's code example to include firebase method to log a user out
-    model.getPopularMovies()
+  logout()
+    .then()
+    .catch();
+  model.getPopularMovies()
     .then(data => view.printCards(data));
 // removes elements that only logged in users have access to
     view.removeMyMoviesSearch();

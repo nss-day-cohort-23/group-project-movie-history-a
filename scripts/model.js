@@ -65,7 +65,7 @@ module.exports.searchMovieDB = userQuery => {
   }); // end of Promise
 };
 
-module.exports.getPopularMoviesFromMovieDB = () => {
+module.exports.getPopularMovies = () => {
   // GET Promise to themoviedb.org their 'popular' movies data.
   console.log('apiKey: ',apiKey);
   return new Promise((resolve, reject)=>{
