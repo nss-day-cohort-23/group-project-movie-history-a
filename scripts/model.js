@@ -41,12 +41,12 @@ module.exports.searchMovieDB = userQuery => {
   return new Promise((resolve, reject)=>{
     let searchResults = [];
     $.ajax({
-      url:`https://api.themoviedb.org/3/search/movie?api_key=${apiKey.apiKey}&language=en-US&query=${userQuery}&page=1&include_adult=false`
+      url:`https://api.themoviedb.org/3/search/movie?api_key=${apiKey.mdbApiKey}&language=en-US&query=${userQuery}&page=1&include_adult=false`
     }).done(movies=>{
       movies.results.forEach(movie=>{
          let movieYear = movie.release_date.slice(0, 4);
          $.ajax({
-           url: `https://api.themoviedb.org/3/movie/${movie.id}/credits?api_key=${apiKey.apiKey}`
+           url: `https://api.themoviedb.org/3/movie/${movie.id}/credits?api_key=${apiKey.mdbApiKey}`
          }).done((cast)=>{
            let movieTopBilledActorsArray = [];
            cast.cast.forEach(castMember=>movieTopBilledActorsArray.push(castMember.name));
@@ -73,13 +73,13 @@ module.exports.getPopularMoviesFromMovieDB = () => {
   return new Promise((resolve, reject)=>{
     let popularMoviesArray = [];
     $.ajax({
-      url: `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey.apiKey}&language=en-US&page=1`
+      url: `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey.mdbApiKey}&language=en-US&page=1`
     }).done((popularMovies)=>{
       let moviesArray = [];
       popularMovies.results.forEach((movie)=>{
         let movieYear = movie.release_date.slice(0, 4);
         $.ajax({
-          url: `https://api.themoviedb.org/3/movie/${movie.id}/credits?api_key=${apiKey.apiKey}`
+          url: `https://api.themoviedb.org/3/movie/${movie.id}/credits?api_key=${apiKey.mdbApiKey}`
         }).done((cast)=>{
           let movieTopBilledActorsArray = [];
           cast.cast.forEach(castMember=>movieTopBilledActorsArray.push(castMember.name));
@@ -96,6 +96,7 @@ module.exports.getPopularMoviesFromMovieDB = () => {
         }); // end of cast forEach
       }); // end of movie forEach
     });
+    console.log(popularMoviesArray, "in model");
     resolve(popularMoviesArray);
   });// end of Promise
 };

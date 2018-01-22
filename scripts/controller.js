@@ -12,9 +12,11 @@ module.exports.populatePage = () => {
     activateListeners();
     // call to API to get Top Rated movies, then pass Top Rated Movies to print to DOM
     model.getPopularMoviesFromMovieDB()
-    .then((popularMovies) => {
-        view.printCards(popularMovies);
-    }); 
+    .then(data => {
+        setTimeout(() => {
+            view.printCards(data);
+        }, 1500);
+    });
 };
 
 const activateListeners = () =>{
