@@ -104,7 +104,7 @@ module.exports.getPopularMovies = () => {
 module.exports.getFirebaseMovies = uid => {
   return new Promise((resolve, reject) => {
     $.ajax({
-      url: `${dbURL}.json?orderBy="uid"&equalTo=${uid}`
+      url: `${dbURL}.json?orderBy="uid"&equalTo="${uid}"`
     })
     .done(data => {
       let dataWithFBIds = attachFirebaseIDs(data);

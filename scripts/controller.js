@@ -75,6 +75,7 @@ const activateListeners = () => {
     });
      
   $(document).on("click", ".add-to-watchlist", function() {
+      console.log("added!");
       let selectedMovieId = $(this).parent().attr('id');
       clickAddToWatchList(selectedMovieId);
     });
@@ -93,14 +94,14 @@ function searchForMovies() {
     model.searchMovieDB(userQuery)
         .then(dbMovies => {
             databaseMovies = dbMovies; // store in global variable
-            return model.getFirebaseMovies(uid);  // this returns a 400 bad requiest because it doesn't like the uid you're passing in
-            // if you run return model.getFirebaseMovies(4321) then it returns all the movies with the user id 4321 (all the dummy data)
+            console.log(uid);
+            return model.getFirebaseMovies(uid); 
+    
         })
         .then(fbMovies => {
-            console.log("this should be ALL of the user's movies", fbMovies);
             fbMovies.forEach(fbMovie => {
                 databaseMovies.forEach(dbMovie => {
-                    if (fbMovie.movieID == dbMovie.id){
+                    if (fbMovie.movieID == dbMovie.movie_id){
                         firebaseMovies.push(fbMovie);
                     }
                 });
