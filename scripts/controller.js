@@ -5,6 +5,17 @@ const firebase = require("./fb-config");
 const model = require('./model');
 const view = require('./view');
 
+module.exports.populatePage = () => {
+    view.printHomepage();
+    activateListeners();
+    // call to API to get Top Rated movies, then pass Top Rated Movies to print to DOM
+    model.getPopularMovies()
+    .then(data => {
+        setTimeout(() => {
+            view.printCards(data);
+        }, 1500);
+    });
+};
 
 const logout = () => {
   return firebase.auth().signOut();
@@ -39,32 +50,23 @@ const clickLogin = () => {
 };
 
 const activateListeners = () => {
-  $("#db-searchbar").keyup(function(e) {
-    if (e.keyCode === 13) {
-      let userQuery = this.value;
-      model.searchMovieDB(userQuery)
-        .then(moviesArray => {
-          console.log('moviesArray: ', moviesArray);
-          // view.printCards(moviesArray);
-        });
-    }
-  });
-  $(document).on("click", ".addToItinerary", function() {
+    $("#db-searchbar").keyup(function(e) {
+      if (e.keyCode === 13) {
+        let userQuery = this.value;
+        model.searchMovieDB(userQuery)
+          .then(moviesArray => {
+            setTimeout(() => {
+                view.printCards(moviesArray);
+            }, 1500);
+          });
+      }
+    });
+    $(document).on("click", "#add", function() {
+  
+    });
+    $("#loginBtn").click(clickLogin);
+  };
 
-  });
-  $("#loginBtn").click(clickLogin);
-};
-
-module.exports.populatePage = () => {
-  // view.printNav();
-  // view.printFooter();
-  // view.printBody();
-  view.printHomepage();
-  activateListeners();
-  // call to API to get Top Rated movies, then pass Top Rated Movies to print to DOM
-  model.getPopularMovies();
-  // .then(data => printCards(data))
-};
 
 module.exports.enterSearchForMovies = () => {
 // get value entered in search
@@ -72,7 +74,7 @@ module.exports.enterSearchForMovies = () => {
 // passing search term to API call
     model.getMovieDBSearch(term)
 // takes returned data to print to dom
-    .then(data => view.PrintCards(data));
+    .then(data => view.printCards(data));
 };
 
 module.exports.enterSearchMyMovies = uid => {
