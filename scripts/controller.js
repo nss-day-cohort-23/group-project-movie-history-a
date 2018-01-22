@@ -55,8 +55,13 @@ const activateListeners = () => {
         searchForMovies();
         }
     });
- 
-  $(document).on("click", "#loginBtn", clickLogin);
+
+    $("#loginBtn").click(clickLogin);
+
+    $(document).on("click", ".add", function () {
+        let selectedMovieId = $(this).parent().attr('id');
+        clickAddToWatchList(selectedMovieId); 
+    });
 };
 
 
@@ -64,12 +69,11 @@ function searchForMovies() {
     const userQuery = $('#searchbar').val();
     let databaseMovies = [];
     let firebaseMovies = [];
-    const user = firebase.auth().currentUser;
-    console.log("user id", user.uid);
+    const uid = firebase.auth().currentUser.uid;
     model.searchMovieDB(userQuery)
         .then(dbMovies => {
             databaseMovies = dbMovies; // store in global variable
-            return model.getFirebaseMovies(4321);  // set to dummy variable right now
+            return model.getFirebaseMovies(uid);  // set to dummy variable right now
         })
         .then(fbMovies => {
             console.log("this should be ALL of the user's movies", fbMovies);
@@ -101,15 +105,21 @@ module.exports.clickShowWatched = uid => {
     });
 };
 
-module.exports.clickAddToWatchList = () => {
-// if user is not logged in, alert user to log the f in
-// otherwise...take the movie the picked and send it to FB to post
-    let movieObj = {
-        movieID: 1234,
-        uid: 4321
-    };
-    model.postFirebaseMovie(movieObj);
-    // .then(view.printSuccess()); // print successmessage when movie added
+const clickAddToWatchList = (movieToAdd) => {
+    let currentUser = firebase.auth().currentUser.uid;
+// testing for current user, if no user they cannot add movie
+    if (currentUser === null) {
+        alert("Sign In To Use This Premium Feature");
+    }
+    else {
+        let movieObj = {
+            movieID: movieToAdd,
+            uid: currentUser
+        };
+        console.log(movieObj);
+        model.postFirebaseMovie(movieObj)
+        .then(view.printSuccessMsg());
+    }
 };
 
 // this should accept a firebase movie ID
