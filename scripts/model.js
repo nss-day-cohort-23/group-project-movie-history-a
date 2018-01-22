@@ -60,7 +60,6 @@ module.exports.postFirebaseMovie = movieObj => {
       method: "POST",
       data: JSON.stringify(movieObj)
     }).done((result) => {
-      $("#tester-card").attr("id", result.name); // this attaches the firebase id to the tester dom element
       resolve();
     });
   });

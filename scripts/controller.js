@@ -37,13 +37,11 @@ module.exports.enterSearchMyMovies = uid => {
 // get value entered in search
     let searchTerm = $('#searchMyMovies').val();
 // passing search term to FB call
-    uid = 4321; // dummy id from the tester movieObj
     model.getFirebaseMovies(uid)
 // takes returned data filtered by UID to filter through by search term & print to DOM
     .then(allMovies => {
-        console.log("this should be ALL of a user's movies", allMovies);
-        // let filteredData = model.filterByParameter(userData, searchTerm);
-        // view.printCards(filteredData);
+        let filteredData = model.filterByParameter(allMovies, searchTerm);
+        view.printCards(filteredData);
     });
 };
 
