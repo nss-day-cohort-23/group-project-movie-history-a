@@ -52,42 +52,48 @@ const clickLogin = () => {
 const activateListeners = () => {
   $("#searchbar").keyup(function(e) {
     if (e.keyCode === 13) {
-      let userQuery = this.value;
-      model.searchMovieDB(userQuery)
-        .then(moviesArray => {
-              setTimeout(() => {
-                  view.printCards(moviesArray);
-              }, 1500);
-        });
-    }
-  });
-  $(document).on("click", ".addToItinerary", function() {
-
-  });
+        searchForMovies();
+        }
+    });
+ 
   $(document).on("click", "#loginBtn", clickLogin);
 };
 
 
-module.exports.enterSearchForMovies = () => {
-// get value entered in search
-    let term = $('#searchBar').val();
-// passing search term to API call
-    model.getMovieDBSearch(term)
-// takes returned data to print to dom
-    .then(data => view.printCards(data));
-};
+function searchForMovies() {
 
-module.exports.enterSearchMyMovies = uid => {
-// get value entered in search
-    let searchTerm = $('#searchMyMovies').val();
-// passing search term to FB call
-    model.getFirebaseMovies(uid)
-// takes returned data filtered by UID to filter through by search term & print to DOM
-    .then(allMovies => {
-        let filteredData = model.filterByParameter(allMovies, searchTerm);
-        view.printCards(filteredData);
-    });
-};
+    const userQuery = $('#searchbar').val();
+    const moviesToPrint = [];
+    const user = firebase.auth().currentUser;
+    console.log("this should be the user", user);
+    model.searchMovieDB(userQuery)
+        .then(dbMovies => {
+            setTimeout(() => {
+                // moviesToPrint.push(dbMovies);
+                // console.log("this should be the movies to print array", moviesToPrint);
+                view.printCards(dbMovies);
+            }, 1500);
+        });
+  
+            // return model.getFirebaseMovies();
+       
+        // .then(allFBMovies => {
+
+        // });
+    
+}
+
+// module.exports.enterSearchMyMovies = uid => {
+// // get value entered in search
+//     let searchTerm = $('#searchMyMovies').val();
+// // passing search term to FB call
+//     model.getFirebaseMovies(uid)
+// // takes returned data filtered by UID to filter through by search term & print to DOM
+//     .then(allMovies => {
+//         let filteredData = model.filterByParameter(allMovies, searchTerm);
+//         view.printCards(filteredData);
+//     });
+// };
 
 module.exports.clickShowUnwatched = uid => {
     model.getFirebaseMovies(uid)
