@@ -85,18 +85,6 @@ function searchForMovies() {
         });     
 }
 
-// module.exports.enterSearchMyMovies = uid => {
-// // get value entered in search
-//     let searchTerm = $('#searchMyMovies').val();
-// // passing search term to FB call
-//     model.getFirebaseMovies(uid)
-// // takes returned data filtered by UID to filter through by search term & print to DOM
-//     .then(allMovies => {
-//         let filteredData = model.filterByParameter(allMovies, searchTerm);
-//         view.printCards(filteredData);
-//     });
-// };
-
 module.exports.clickShowUnwatched = uid => {
     model.getFirebaseMovies(uid)
     .then(data => {
