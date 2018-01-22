@@ -32,19 +32,18 @@ module.exports.printHomepage = () => {
 
 module.exports.printCards = movieData => {
   const cardsTemplate = require("../templates/movieCards.hbs");
+  $("#movie-container").empty();
   movieData.forEach( (movie) => {
-  $("#row").append(cardsTemplate(movie));
+  $("#movie-container").append(cardsTemplate(movie));
   });
-  // console.log(movieData, "receives array of movie objects");
-  // $("#popular-movies").html(cardsTemplate({"movies": movieData}));
-    // $("#popular-movies").html(cardsTemplate({movieData}));
+  console.log(movieData, "receives array of movie objects");
 };
 
 module.exports.removeCard = fbID => {
   // Removes movie card from DOM using fbID
 };
 
-module.exports.printLogoutBtn = () => {
+module.exports.printLogOut = () => {
   // Prints logout btn in navbar
   // Potentially combined with other login/logout btn fn() (i.e., toggleLoginOutBtns)
 };
@@ -64,7 +63,7 @@ module.exports.removeLoginBtn = () => {
   // Potentially combined with other login/logout btn fn() (i.e., toggleLoginOutBtns)
 };
 
-module.exports.printMyMoviesSearchBar = () => {
+module.exports.printMyMoviesSearch = () => {
   // Prints "Search My Movies" search bar in navbar
 };
 

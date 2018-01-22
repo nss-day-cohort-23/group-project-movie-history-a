@@ -1,17 +1,15 @@
 "use strict";
 
 const $ = require("jquery");
+const firebase = require("./fb-config");
 const model = require('./model');
 const view = require('./view');
 
 module.exports.populatePage = () => {
-    // view.printNav();
-    // view.printFooter();
-    // view.printBody();
     view.printHomepage();
     activateListeners();
     // call to API to get Top Rated movies, then pass Top Rated Movies to print to DOM
-    model.getPopularMoviesFromMovieDB()
+    model.getPopularMovies()
     .then(data => {
         setTimeout(() => {
             view.printCards(data);
@@ -19,31 +17,56 @@ module.exports.populatePage = () => {
     });
 };
 
-const activateListeners = () =>{
-    $("#db-searchbar").keyup(function(e){
-        if(e.keyCode === 13){
-            let userQuery = this.value;
-            model.searchMovieDB(userQuery)
-            .then(moviesArray=>{
-                console.log('moviesArray: ',moviesArray);
-                // view.printCards(moviesArray);
-            });
-        }
-    });
-    $(document).on("click", ".addToItinerary", function(){
-        
-    });
+const logout = () => {
+  return firebase.auth().signOut();
 };
 
-module.exports.clickLogin = () => {
-// function to pop up google authentication with firebase
-// once authenticated, watched/unwatched toggle button will populate with below function
-    view.printToggle();
-// prints search bar to search My Movies
-    view.printMyMoviesSearch();
-    view.removeLoginBtn();
-    view.printLogOut();
+const authUser = key => {
+  const provider = new firebase.auth.GoogleAuthProvider();
+
+  return firebase.auth().signInWithPopup(provider);
 };
+
+const clickLogin = () => {
+  // function to pop up google authentication with firebase
+  console.log("clicked login!");
+  authUser()
+    .then(result => {
+      console.log("Success!");
+      let user = result.user;
+      let uid = user.uid;
+    })
+    .catch(error => {
+      console.log("Failure!");
+      let errorCode = error.code;
+      let errorMessage = error.message;
+    });
+  // once authenticated, watched/unwatched toggle button will populate with below function
+  // view.printToggle();
+  // prints search bar to search My Movies
+  view.printMyMoviesSearch();
+  view.removeLoginBtn();
+  view.printLogOut();
+};
+
+const activateListeners = () => {
+    $("#db-searchbar").keyup(function(e) {
+      if (e.keyCode === 13) {
+        let userQuery = this.value;
+        model.searchMovieDB(userQuery)
+          .then(moviesArray => {
+            setTimeout(() => {
+                view.printCards(moviesArray);
+            }, 1500);
+          });
+      }
+    });
+    $(document).on("click", "#add", function() {
+  
+    });
+    $("#loginBtn").click(clickLogin);
+  };
+
 
 module.exports.enterSearchForMovies = () => {
 // get value entered in search
@@ -51,20 +74,18 @@ module.exports.enterSearchForMovies = () => {
 // passing search term to API call
     model.getMovieDBSearch(term)
 // takes returned data to print to dom
-    .then(data => view.PrintCards(data));
+    .then(data => view.printCards(data));
 };
 
 module.exports.enterSearchMyMovies = uid => {
 // get value entered in search
     let searchTerm = $('#searchMyMovies').val();
 // passing search term to FB call
-    uid = 4321; // dummy id from the tester movieObj
     model.getFirebaseMovies(uid)
 // takes returned data filtered by UID to filter through by search term & print to DOM
     .then(allMovies => {
-        console.log("this should be ALL of a user's movies", allMovies);
-        // let filteredData = model.filterByParameter(userData, searchTerm);
-        // view.printCards(filteredData);
+        let filteredData = model.filterByParameter(allMovies, searchTerm);
+        view.printCards(filteredData);
     });
 };
 
@@ -109,7 +130,10 @@ module.exports.clickRating = (fbID, rating) => {
 
 module.exports.clickLogOut = () => {
 // pls rvw fb docs/joe's code example to include firebase method to log a user out
-    model.getPopularMovies()
+  logout()
+    .then()
+    .catch();
+  model.getPopularMovies()
     .then(data => view.printCards(data));
 // removes elements that only logged in users have access to
     view.removeMyMoviesSearch();
