@@ -21,6 +21,9 @@ module.exports.printCards = movieData => {
   const cardsTemplate = require("../templates/movieCards.hbs");
   movieData.forEach( (movie) => {
     $("#movie-container").append(cardsTemplate(movie));
+    if(movie.rating) {
+      module.exports.printStars(movie.fbID, movie.rating);
+    }
   });
 };
 
@@ -46,8 +49,19 @@ module.exports.printSuccessMsg = () => {
   alert("Successfully Added.");
 };
 
-module.exports.printStars = () => {
-  // Prints colored in stars on movie card
+module.exports.printStars = (id, rating) => {
+  if (rating < 7) $(`div#${id}`).removeClass("favorite");
+  if (rating > 6) $(`div#${id}`).addClass("favorite");
+  let j = 0;
+  for (let i = 0; i <= 10; i++) {
+    for (j; j <= rating; j++) {
+      $(`div#${id} .stars .star-${j} svg`).removeClass("star-unrated");
+      $(`div#${id} .stars .star-${j} svg`).addClass("star-rated");
+      i++;
+    }
+    $(`div#${id} .stars .star-${i} svg`).removeClass("star-rated");
+    $(`div#${id} .stars .star-${i} svg`).addClass("star-unrated");
+  }
 };
 
 module.exports.filterResults = function(e){

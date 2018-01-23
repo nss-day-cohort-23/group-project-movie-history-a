@@ -77,6 +77,7 @@ const activateListeners = () => {
       clickAddToWatchList(selectedMovieId);
     });
 
+  $(document).on("click", "path", e => clickRating(e));
   $(document).on("click", "#loginBtn", clickLogin);
   $(document).on("click", "#logoutBtn", clickLogout);
   $(".filter").on("click", view.filterResults);
@@ -129,9 +130,13 @@ const clickAddToWatchList = (movieToAdd) => {
 };
 
 // this should accept a firebase movie ID and a number rating from the user
-module.exports.clickRating = (fbID, rating) => {
-    model.rateMovie(fbID, rating);
-    // .then(view.printStars(ratingObj));
+const clickRating = event => {
+    let fbID = event.target.parentNode.parentNode.parentNode.parentNode.id,
+    rating = [...event.target.parentNode.parentNode.classList]
+              .find(elm => elm.match(/\d+/))
+              .match(/\d+/)[0];
+    model.rateMovie(fbID, rating)
+    .then(view.printStars(fbID, rating));
 };
 
 
