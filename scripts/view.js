@@ -52,5 +52,9 @@ module.exports.printStars = () => {
 
 module.exports.filterResults = function(e){
   console.log('event target: ',this.id);
+  // if the movie is SAVED in firebase, but DOES NOT have a rating property, then it will display in 'Unwatched'
+  // if the ovie is saved in firebase and DOES have a rating, then it will display in 'Watched'
+  // if the movie has a rating above 7, then it will display in 'Favorites'
+
   
 };
