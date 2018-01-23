@@ -20,7 +20,6 @@ module.exports.printHomepage = () => {
 
 module.exports.printCards = movieData => {
   const cardsTemplate = require("../templates/movieCards.hbs");
-  // $("#movie-container").empty();
   movieData.forEach( (movie) => {
     $("#movie-container").append(cardsTemplate(movie));
   });

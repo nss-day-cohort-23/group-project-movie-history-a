@@ -87,6 +87,7 @@ const activateListeners = () => {
 
 
 function searchForMovies() {
+    $("#movie-container").empty();
     const userQuery = $('#searchbar').val();
     let databaseMovies = [];
     let firebaseMovies = [];
@@ -94,14 +95,17 @@ function searchForMovies() {
     model.searchMovieDB(userQuery)
         .then(dbMovies => {
             databaseMovies = dbMovies; // store in global variable
-            console.log(uid);
-            return model.getFirebaseMovies(uid); 
+            return model.getFirebaseMovies(uid); // pass in user id to get all of the user's movies
     
         })
         .then(fbMovies => {
             fbMovies.forEach(fbMovie => {
                 databaseMovies.forEach(dbMovie => {
                     if (fbMovie.movieID == dbMovie.movie_id){
+                        fbMovie.movie_cast = dbMovie.movie_cast;
+                        fbMovie.movie_title = dbMovie.movie_title;
+                        fbMovie.movie_year = dbMovie.movie_year;
+                        fbMovie.movie_poster_full_URL = dbMovie.movie_poster_full_URL;
                         firebaseMovies.push(fbMovie);
                     }
                 });
