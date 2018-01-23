@@ -53,11 +53,16 @@ module.exports.printStars = () => {
 module.exports.filterResults = function(e){
   console.log('event target: ',this.id);
   let filterType = this.id; 
-  // if the movie is SAVED in firebase, but DOES NOT have a rating property, then it will display in 'Unwatched'
-  // if the movie is saved in firebase and DOES have a rating, then it will display in 'Watched'
-  // if the movie has a rating above 7, then it will display in 'Favorites'
   $("div .card").not($(`.${filterType}`)).hide();
   $("div .card").filter($(`.${filterType}`)).show();
+};
 
-  
+module.exports.addFavoriteClass = () =>{
+  for(let i = 1; i < 11; i++){
+    if(i<=6){
+      $(".card").filter($(`star-${i}`)).removeClass('favorite');
+    } else if(i>7){
+      $(".card").filter($(`star-${i}`)).addClass('favorite');
+    }
+  }
 };

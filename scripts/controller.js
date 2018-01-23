@@ -111,22 +111,6 @@ function searchForMovies() {
         });     
 }
 
-module.exports.clickShowUnwatched = uid => {
-    model.getFirebaseMovies(uid)
-    .then(data => {
-        let filteredData = model.filterByParameter(data, "unwatched");
-        view.printCards(filteredData);
-    });
-};
-
-module.exports.clickShowWatched = uid => {
-    model.getFirebaseMovies(uid)
-    .then(data => {
-        let filteredData = model.filterByParameter(data, "watched");
-        view.printCards(filteredData);
-    });
-};
-
 const clickAddToWatchList = (movieToAdd) => {
     let currentUser = firebase.auth().currentUser.uid;
 // testing for current user, if no user they cannot add movie
