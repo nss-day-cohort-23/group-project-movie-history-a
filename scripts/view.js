@@ -22,14 +22,9 @@ module.exports.printCards = movieData => {
   const cardsTemplate = require("../templates/movieCards.hbs");
   movieData.forEach( (movie) => {
     $("#movie-container").append(cardsTemplate(movie));
-<<<<<<< HEAD
     if(movie.rating) {
-      for (let i = 0; i < movie.rating; i++) {
-        $(`div#${movie.movie_id} .stars .star-${i} svg`).toggleClass("star-unrated star-rated");
-      }
+      module.exports.printStars(movie.fbID, movie.rating);
     }
-=======
->>>>>>> master
   });
 };
 
