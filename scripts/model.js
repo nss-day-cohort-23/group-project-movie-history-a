@@ -26,13 +26,26 @@ const attachFirebaseIDs = data => {
   return dataToReturn;
 };
 
-const getActorsFromMovieDB = () => {
-  // EITHER: Successful GET requests inside of this mod call this function &
-  // attach the actor data to the general movie data obj.
-  // OR: this is exported & controller.js calls this func in the .then statement
-  // of each GET request.
-  // Joe Shep also said this can be chained onto some GET requests when one knows
-  // the movie_id already?
+module.exports.getCast = data => {
+  let movieYear = data.release_date.slice(0, 4);
+  return new Promise(function(resolve, reject) {
+    $.ajax({
+      url: `https://api.themoviedb.org/3/movie/${data.id}/credits?api_key=${creds.mdbApiKey}`
+    }).done(cast => {
+      let movieTopBilledActorsArray = [];
+      cast.cast.forEach(castMember => movieTopBilledActorsArray.push(castMember.name));
+      let topActors = movieTopBilledActorsArray.slice(0, 3).join(", ");
+      let moviePosterURL = `https://image.tmdb.org/t/p/w342${data.poster_path}`;
+      let movie = {
+        movie_title: data.title,
+        movie_id: data.id,
+        movie_year: movieYear,
+        movie_cast: topActors,
+        movie_poster_full_URL: moviePosterURL
+      };
+      resolve(movie);
+    });
+  });
 };
 
 module.exports.searchMovieDB = userQuery => {
