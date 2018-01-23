@@ -16,12 +16,10 @@ module.exports.populatePage = () => {
             view.toggleLoginButton();
         }, 1500);
     });
-    
 };
 
 const logout = () => {
   return firebase.auth().signOut();
-  
 };
 
 const clickLogout = () => {
@@ -40,7 +38,6 @@ const clickLogout = () => {
 
 const authUser = () => {
   const provider = new firebase.auth.GoogleAuthProvider();
-
   return firebase.auth().signInWithPopup(provider);
 };
 
@@ -71,15 +68,15 @@ const activateListeners = () => {
   $("#searchbar").keyup(function(e) {
     if (e.keyCode === 13) {
         searchForMovies();
-        }
-    });
+    }
+  });
      
   $(document).on("click", ".add-to-watchlist", e => addToWatchlist(e)); 
   $(document).on("click", "#deleteMovie", e => deleteUserMovie(e));
   $(document).on("click", "path", e => clickRating(e));
   $(document).on("click", "#loginBtn", clickLogin);
   $(document).on("click", "#logoutBtn", clickLogout);
-
+  $(".filter").on("click", view.filterResults);
 };
 
 
@@ -93,40 +90,25 @@ function searchForMovies() {
         .then(dbMovies => {
             databaseMovies = dbMovies; // store in global variable
             return model.getFirebaseMovies(uid); // pass in user id to get all of the user's movies
-    
         })
         .then(fbMovies => {
             fbMovies.forEach(fbMovie => {
-                databaseMovies.forEach(dbMovie => {
-                    if (fbMovie.movieID == dbMovie.movie_id){
+                for (let i = 0; i < databaseMovies.length; i++){
+                    let dbMovie = databaseMovies[i];
+                    if (fbMovie.movieID == dbMovie.movie_id) {
                         fbMovie.movie_cast = dbMovie.movie_cast;
                         fbMovie.movie_title = dbMovie.movie_title;
                         fbMovie.movie_year = dbMovie.movie_year;
                         fbMovie.movie_poster_full_URL = dbMovie.movie_poster_full_URL;
+                        databaseMovies.splice(i, 1); // remove the match from the database array
                         firebaseMovies.push(fbMovie);
                     }
-                });
+                }    
             });
-            view.printCards(databaseMovies);
-            view.printCards(firebaseMovies);
+            view.printCards(firebaseMovies); // print user's movies
+            view.printCards(databaseMovies); // print database movies
         });     
 }
-
-module.exports.clickShowUnwatched = uid => {
-    model.getFirebaseMovies(uid)
-    .then(data => {
-        let filteredData = model.filterByParameter(data, "unwatched");
-        view.printCards(filteredData);
-    });
-};
-
-module.exports.clickShowWatched = uid => {
-    model.getFirebaseMovies(uid)
-    .then(data => {
-        let filteredData = model.filterByParameter(data, "watched");
-        view.printCards(filteredData);
-    });
-};
 
 const addToWatchlist = (movieClicked) => {
     let currentUser = firebase.auth().currentUser.uid;

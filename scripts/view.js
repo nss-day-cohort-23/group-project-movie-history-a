@@ -14,9 +14,8 @@ const firebase = require("./fb-config");
 module.exports.printHomepage = () => {
   const homepageTemplate = require("../templates/boilerplate.hbs");
   $("#container").append(homepageTemplate());
-  
-};
 
+};
 
 module.exports.printCards = movieData => {
   const cardsTemplate = require("../templates/movieCards.hbs");
@@ -51,6 +50,8 @@ module.exports.printSuccessMsg = () => {
 };
 
 module.exports.printStars = (id, rating) => {
+  if (rating < 7) $(`div#${id}`).removeClass("favorite");
+  if (rating > 6) $(`div#${id}`).addClass("favorite");
   let j = 0;
   for (let i = 0; i <= 10; i++) {
     for (j; j <= rating; j++) {
@@ -62,3 +63,11 @@ module.exports.printStars = (id, rating) => {
     $(`div#${id} .stars .star-${i} svg`).addClass("star-unrated");
   }
 };
+
+module.exports.filterResults = function(e){
+  console.log('event target: ',this.id);
+  let filterType = this.id; 
+  $("div .card").not($(`.${filterType}`)).hide();
+  $("div .card").filter($(`.${filterType}`)).show();
+};
+
