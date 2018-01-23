@@ -120,9 +120,9 @@ const addToWatchlist = (movieClicked) => {
             movieID: $selectedMovie,
             uid: currentUser
         };
-            model.postFirebaseMovie(movieObj)
-            .then(view.printSuccessMsg());
-        }
+        model.postFirebaseMovie(movieObj)
+        .then(view.printSuccessBtn($selectedMovie));
+    }
 };
 
 // this should accept a firebase movie ID and a number rating from the user
