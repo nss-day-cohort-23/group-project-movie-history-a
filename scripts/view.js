@@ -48,6 +48,7 @@ module.exports.printSuccessBtn = (movieAdded) => {
 
 };
 
+
 module.exports.printStars = (id, rating) => {
   if (rating < 7) $(`div#${id}`).removeClass("favorite");
   if (rating > 6) $(`div#${id}`).addClass("favorite");

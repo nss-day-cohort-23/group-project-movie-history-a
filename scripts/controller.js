@@ -109,18 +109,17 @@ function searchForMovies() {
 }
 
 const addToWatchlist = (movieClicked) => {
-    let currentUser = firebase.auth().currentUser.uid;
     let $selectedMovie = $(movieClicked.currentTarget).parent().attr('id');
-// testing for current user, if no user they cannot add movie
-    if (currentUser === null) {
-        alert("Sign In To Use This Premium Feature");
+    if (firebase.auth().currentUser === null) {
+        alert("You must be signed in to use this premium feature");
+        clickLogin();
     }
     else {
+        let currentUser = firebase.auth().currentUser.uid;
         let movieObj = {
             movieID: $selectedMovie,
             uid: currentUser
         };
-        console.log(movieObj, 'ready to add');
         model.postFirebaseMovie(movieObj)
         .then(view.printSuccessBtn($selectedMovie));
     }
