@@ -17,7 +17,6 @@ module.exports.printHomepage = () => {
   
 };
 
-
 module.exports.printCards = movieData => {
   const cardsTemplate = require("../templates/movieCards.hbs");
   movieData.forEach( (movie) => {
@@ -49,4 +48,9 @@ module.exports.printSuccessMsg = () => {
 
 module.exports.printStars = () => {
   // Prints colored in stars on movie card
+};
+
+module.exports.filterResults = function(e){
+  console.log('event target: ',this.id);
+  
 };

@@ -16,12 +16,10 @@ module.exports.populatePage = () => {
             view.toggleLoginButton();
         }, 1500);
     });
-    
 };
 
 const logout = () => {
   return firebase.auth().signOut();
-  
 };
 
 const clickLogout = () => {
@@ -40,7 +38,6 @@ const clickLogout = () => {
 
 const authUser = () => {
   const provider = new firebase.auth.GoogleAuthProvider();
-
   return firebase.auth().signInWithPopup(provider);
 };
 
@@ -71,8 +68,8 @@ const activateListeners = () => {
   $("#searchbar").keyup(function(e) {
     if (e.keyCode === 13) {
         searchForMovies();
-        }
-    });
+    }
+  });
      
   $(document).on("click", ".add-to-watchlist", function() {
       console.log("added!");
@@ -82,7 +79,7 @@ const activateListeners = () => {
 
   $(document).on("click", "#loginBtn", clickLogin);
   $(document).on("click", "#logoutBtn", clickLogout);
-
+  $(".filter").on("click", view.filterResults);
 };
 
 
@@ -96,7 +93,6 @@ function searchForMovies() {
         .then(dbMovies => {
             databaseMovies = dbMovies; // store in global variable
             return model.getFirebaseMovies(uid); // pass in user id to get all of the user's movies
-    
         })
         .then(fbMovies => {
             fbMovies.forEach(fbMovie => {
