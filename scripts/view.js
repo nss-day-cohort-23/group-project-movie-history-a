@@ -41,9 +41,6 @@ module.exports.toggleLoginButton = () =>{
   }
 };
 
-module.exports.printMyMoviesSearch = () => {
-  // Prints "Search My Movies" search bar in navbar
-};
 
 module.exports.printSuccessMsg = () => {
   alert("Successfully Added.");
@@ -65,9 +62,10 @@ module.exports.printStars = (id, rating) => {
 };
 
 module.exports.filterResults = function(e){
-  console.log('event target: ',this.id);
-  let filterType = this.id; 
+  let filterType = this.id;
   $("div .card").not($(`.${filterType}`)).hide();
   $("div .card").filter($(`.${filterType}`)).show();
+  console.log(filterType);
+  $("#currentSection").html(filterType);
 };
 
