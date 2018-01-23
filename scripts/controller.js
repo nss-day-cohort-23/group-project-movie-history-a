@@ -13,7 +13,6 @@ module.exports.populatePage = () => {
     .then(data => {
         setTimeout(() => {
             view.printCards(data);
-            view.toggleLoginButton();
         }, 1500);
     });
 };
@@ -26,7 +25,6 @@ const clickLogout = () => {
     logout()
         .then(result=>{
             setTimeout(function(){
-                view.toggleLoginButton();
                 console.log('Successful Logout!!!');
                 console.log('currentUser: ',firebase.auth().currentUser);
             }, 500);
@@ -49,7 +47,6 @@ const clickLogin = () => {
       console.log("Successful Login!");
       let user = result.user;
       let uid = user.uid;
-      view.toggleLoginButton();
     })
     .catch(error => {
       console.log("Failure Logging In!");
@@ -60,11 +57,10 @@ const clickLogin = () => {
   // view.printToggle();
   // prints search bar to search My Movies
   view.printMyMoviesSearch();
-  view.toggleLoginButton();
 };
 
 const activateListeners = () => {
-
+    firebase.auth().onAuthStateChanged(user => view.toggleLoginButton());
   $("#searchbar").keyup(function(e) {
     if (e.keyCode === 13) {
         searchForMovies();
@@ -81,6 +77,8 @@ const activateListeners = () => {
   $(document).on("click", "#loginBtn", clickLogin);
   $(document).on("click", "#logoutBtn", clickLogout);
   $(".filter").on("click", view.filterResults);
+
+
 };
 
 

@@ -50,14 +50,15 @@ module.exports.searchMovieDB = userQuery => {
            let movieTopBilledActorsArray = [];
            cast.cast.forEach(castMember=>movieTopBilledActorsArray.push(castMember.name));
            let topActors = movieTopBilledActorsArray.slice(0, 3).join(", ");
-           let moviePosterURL = `https://image.tmdb.org/t/p/w342${movie.poster_path}`;
            let movieResult = {
              movie_title: movie.title,
              movie_id: movie.id,
              movie_year: movieYear,
-             movie_cast: topActors,
-             movie_poster_full_URL: moviePosterURL
+             movie_cast: topActors
            };
+           if(movie.poster_path !== null){
+            movieResult.movie_poster_full_URL = `https://image.tmdb.org/t/p/w342${movie.poster_path}`;
+          }
            searchResults.push(movieResult);
          }); // end of cast forEach
       });
@@ -82,14 +83,15 @@ module.exports.getPopularMovies = () => {
           let movieTopBilledActorsArray = [];
           cast.cast.forEach(castMember=>movieTopBilledActorsArray.push(castMember.name));
           let topActors = movieTopBilledActorsArray.slice(0, 3).join(", ");
-          let moviePosterURL = `https://image.tmdb.org/t/p/w342${movie.poster_path}`;
           let popMovie = {
             movie_title: movie.title,
             movie_id: movie.id,
             movie_year: movieYear,
-            movie_cast: topActors,
-            movie_poster_full_URL: moviePosterURL
+            movie_cast: topActors
           };
+          if(movie.poster_path !== null){
+            popMovie.movie_poster_full_URL = `https://image.tmdb.org/t/p/w342${movie.poster_path}`;
+          }
           popularMoviesArray.push(popMovie);
         }); // end of cast forEach
       }); // end of movie forEach

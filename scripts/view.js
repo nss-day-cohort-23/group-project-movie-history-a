@@ -32,7 +32,7 @@ module.exports.removeCard = fbID => {
 };
 
 module.exports.toggleLoginButton = () =>{
-  if(firebase.auth().currentUser!=null){
+  if(firebase.auth().currentUser!==null){
     $("#loginBtn").hide();
     $("#logoutBtn").show();
   } else if(firebase.auth().currentUser===null){
