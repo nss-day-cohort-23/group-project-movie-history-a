@@ -115,7 +115,6 @@ const addToWatchlist = (movieClicked) => {
         clickLogin();
     }
     else {
-        $(`#${$selectedMovie}`).addClass("watchlist").removeClass("untracked");
         let currentUser = firebase.auth().currentUser.uid;
         let movieObj = {
             movieID: $selectedMovie,
