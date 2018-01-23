@@ -65,7 +65,28 @@ module.exports.filterResults = function(e){
   let filterType = this.id;
   $("div .card").not($(`.${filterType}`)).hide();
   $("div .card").filter($(`.${filterType}`)).show();
-  console.log(filterType);
-  $("#currentSection").html(filterType);
+  printBreadcrumb(filterType);
 };
+
+const printBreadcrumb = (currentSection) => {
+  switch (currentSection) {
+    case 'untracked':
+      currentSection = "Untracked Movies";
+      break;
+    case 'watchlist':
+      currentSection = "Watchlist";
+      break;
+    case 'rated':
+      currentSection = "Rated Movies";
+      break;
+    case 'favorite':
+      currentSection = "My Favorite Movies";
+      break;
+    default:
+      currentSection = "";
+      
+  }
+  $("#currentSection").html(currentSection);
+};
+
 
