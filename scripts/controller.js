@@ -21,7 +21,6 @@ module.exports.populatePage = () => {
 
 const logout = () => {
   return firebase.auth().signOut();
-  
 };
 
 const clickLogout = () => {
@@ -101,18 +100,20 @@ function searchForMovies() {
         })
         .then(fbMovies => {
             fbMovies.forEach(fbMovie => {
-                databaseMovies.forEach(dbMovie => {
-                    if (fbMovie.movieID == dbMovie.movie_id){
+                for (let i = 0; i < databaseMovies.length; i++){
+                    let dbMovie = databaseMovies[i];
+                    if (fbMovie.movieID == dbMovie.movie_id) {
                         fbMovie.movie_cast = dbMovie.movie_cast;
                         fbMovie.movie_title = dbMovie.movie_title;
                         fbMovie.movie_year = dbMovie.movie_year;
                         fbMovie.movie_poster_full_URL = dbMovie.movie_poster_full_URL;
+                        databaseMovies.splice(i, 1); // remove the match from the database array
                         firebaseMovies.push(fbMovie);
                     }
-                });
+                }    
             });
-            view.printCards(databaseMovies);
             view.printCards(firebaseMovies);
+            view.printCards(databaseMovies);
         });     
 }
 
