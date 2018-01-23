@@ -92,8 +92,11 @@ function searchForMovies() {
     const uid = firebase.auth().currentUser.uid;
     model.searchMovieDB(userQuery)
         .then(dbMovies => {
-            databaseMovies = dbMovies; // store in global variable
-            return model.getFirebaseMovies(uid); // pass in user id to get all of the user's movies
+            dbMovies.results.forEach(movie => {
+              model.getCast(movie)
+              .then(formattedMovie => databaseMovies.push(formattedMovie));
+            });
+            return model.getFirebaseMovies(uid); // pass in user id tdo get all of the user's movies
         })
         .then(fbMovies => {
             fbMovies.forEach(fbMovie => {
