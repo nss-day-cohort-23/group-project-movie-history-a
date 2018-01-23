@@ -9,7 +9,6 @@
     {{#if movie_poster_full_URL}}
       <img src="{{movie_poster_full_URL}}">
     {{else}}
-<<<<<<< HEAD
       <img src="placeholderimage">
     {{/if}}
       <h2>{{movie_title}}</h2>
@@ -83,11 +82,10 @@
     <button type="button" class="btn btn-secondary my-1 add-to-watchlist" id="addToWatchlist">Add to Watchlist</button>
   </div>
 {{/if}}
-=======
           <div class="card p-2 dbMovie" id="{{this.movie_id}}">
             {{#if movie_poster_full_URL}}
-              <img src="{{movie_poster_full_URL}}"> 
-            {{else}} 
+              <img src="{{movie_poster_full_URL}}">
+            {{else}}
               <img src="placeholderimage">
             {{/if}}
             <h2>{{this.movie_title}}</h2>
@@ -96,4 +94,3 @@
               <button type="button" class="btn btn-secondary my-1 add-to-watchlist">Add Movie</button>
         </div>
     {{/if}}
->>>>>>> master
