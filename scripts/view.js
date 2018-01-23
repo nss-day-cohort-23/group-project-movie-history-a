@@ -43,7 +43,7 @@ module.exports.toggleLoginButton = () =>{
 
 
 module.exports.printSuccessBtn = (movieAdded) => {
-  console.log($(`#${movieAdded}`));
+  console.log($(`#${movieAdded}`).find("button").text());
 };
 
 module.exports.printStars = (id, rating) => {
