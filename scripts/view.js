@@ -42,8 +42,8 @@ module.exports.toggleLoginButton = () =>{
 };
 
 
-module.exports.printSuccessMsg = () => {
-  alert("Successfully Added.");
+module.exports.printSuccessBtn = (movieAdded) => {
+  console.log($(`#${movieAdded}`));
 };
 
 module.exports.printStars = (id, rating) => {

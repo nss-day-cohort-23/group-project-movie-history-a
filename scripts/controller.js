@@ -122,7 +122,7 @@ const addToWatchlist = (movieClicked) => {
         };
         console.log(movieObj, 'ready to add');
         model.postFirebaseMovie(movieObj)
-        .then(view.printSuccessMsg());
+        .then(view.printSuccessBtn($selectedMovie));
     }
 };
 
