@@ -20,11 +20,9 @@ module.exports.printHomepage = () => {
 
 module.exports.printCards = movieData => {
   const cardsTemplate = require("../templates/movieCards.hbs");
-  $("#movie-container").empty();
   movieData.forEach( (movie) => {
-  $("#movie-container").append(cardsTemplate(movie));
+    $("#movie-container").append(cardsTemplate(movie));
   });
-  console.log(movieData, "receives array of movie objects");
 };
 
 module.exports.removeCard = fbID => {

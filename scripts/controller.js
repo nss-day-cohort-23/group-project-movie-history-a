@@ -67,22 +67,18 @@ const clickLogin = () => {
 };
 
 const activateListeners = () => {
+
   $("#searchbar").keyup(function(e) {
     if (e.keyCode === 13) {
-      let userQuery = this.value;
-      model.searchMovieDB(userQuery)
-        .then(moviesArray => {
-              setTimeout(() => {
-                  view.printCards(moviesArray);
-              }, 1500);
-        });
-    }
-  });
-
+        searchForMovies();
+        }
+    });
+     
   $(document).on("click", ".add-to-watchlist", function() {
+      console.log("added!");
       let selectedMovieId = $(this).parent().attr('id');
       clickAddToWatchList(selectedMovieId);
-});
+    });
 
   $(document).on("click", "#loginBtn", clickLogin);
   $(document).on("click", "#logoutBtn", clickLogout);
@@ -90,26 +86,34 @@ const activateListeners = () => {
 };
 
 
-module.exports.enterSearchForMovies = () => {
-// get value entered in search
-    let term = $('#searchBar').val();
-// passing search term to API call
-    model.getMovieDBSearch(term)
-// takes returned data to print to dom
-    .then(data => view.printCards(data));
-};
-
-module.exports.enterSearchMyMovies = uid => {
-// get value entered in search
-    let searchTerm = $('#searchMyMovies').val();
-// passing search term to FB call
-    model.getFirebaseMovies(uid)
-// takes returned data filtered by UID to filter through by search term & print to DOM
-    .then(allMovies => {
-        let filteredData = model.filterByParameter(allMovies, searchTerm);
-        view.printCards(filteredData);
-    });
-};
+function searchForMovies() {
+    $("#movie-container").empty();
+    const userQuery = $('#searchbar').val();
+    let databaseMovies = [];
+    let firebaseMovies = [];
+    const uid = firebase.auth().currentUser.uid;
+    model.searchMovieDB(userQuery)
+        .then(dbMovies => {
+            databaseMovies = dbMovies; // store in global variable
+            return model.getFirebaseMovies(uid); // pass in user id to get all of the user's movies
+    
+        })
+        .then(fbMovies => {
+            fbMovies.forEach(fbMovie => {
+                databaseMovies.forEach(dbMovie => {
+                    if (fbMovie.movieID == dbMovie.movie_id){
+                        fbMovie.movie_cast = dbMovie.movie_cast;
+                        fbMovie.movie_title = dbMovie.movie_title;
+                        fbMovie.movie_year = dbMovie.movie_year;
+                        fbMovie.movie_poster_full_URL = dbMovie.movie_poster_full_URL;
+                        firebaseMovies.push(fbMovie);
+                    }
+                });
+            });
+            view.printCards(databaseMovies);
+            view.printCards(firebaseMovies);
+        });     
+}
 
 module.exports.clickShowUnwatched = uid => {
     model.getFirebaseMovies(uid)
