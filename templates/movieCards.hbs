@@ -1,9 +1,9 @@
 {{!-- checking to see if movie object has rating property, if so, adding as watched movie --}}
 {{#if uid}}
     {{#if rating}}
-      <div class="card p-2 watched" id="needs_FB_Key">
+      <div class="card p-2 watched" id="{{fbID}}">
     {{else}}
-      <div class="card p-2 un-watched" id="needs_FB_Key">
+      <div class="card p-2 un-watched" id="{{fbID}}">
     {{/if}}
     {{!-- checking if there is a movie poster URL, if there is not, we will pass in placeholder image --}}
     {{#if movie_poster_full_URL}}
