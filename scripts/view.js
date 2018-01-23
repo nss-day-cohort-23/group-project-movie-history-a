@@ -20,16 +20,17 @@ module.exports.printHomepage = () => {
 
 module.exports.printCards = movieData => {
   const cardsTemplate = require("../templates/movieCards.hbs");
-  $("#movie-container").empty();
   movieData.forEach( (movie) => {
     $("#movie-container").append(cardsTemplate(movie));
+<<<<<<< HEAD
     if(movie.rating) {
       for (let i = 0; i < movie.rating; i++) {
         $(`div#${movie.movie_id} .stars .star-${i} svg`).toggleClass("star-unrated star-rated");
       }
     }
+=======
+>>>>>>> master
   });
-  console.log(movieData, "receives array of movie objects");
 };
 
 module.exports.removeCard = fbID => {
