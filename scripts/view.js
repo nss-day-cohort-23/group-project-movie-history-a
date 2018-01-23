@@ -50,6 +50,15 @@ module.exports.printSuccessMsg = () => {
   alert("Successfully Added.");
 };
 
-module.exports.printStars = () => {
-  // Prints colored in stars on movie card
+module.exports.printStars = (id, rating) => {
+  let j = 0;
+  for (let i = 0; i <= 10; i++) {
+    for (j; j <= rating; j++) {
+      $(`div#${id} .stars .star-${j} svg`).removeClass("star-unrated");
+      $(`div#${id} .stars .star-${j} svg`).addClass("star-rated");
+      i++;
+    }
+    $(`div#${id} .stars .star-${i} svg`).removeClass("star-rated");
+    $(`div#${id} .stars .star-${i} svg`).addClass("star-unrated");
+  }
 };
