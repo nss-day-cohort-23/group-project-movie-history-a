@@ -26,7 +26,6 @@ const clickLogout = () => {
     logout()
         .then(result=>{
             setTimeout(function(){
-                view.toggleLoginButton();
                 console.log('Successful Logout!!!');
                 console.log('currentUser: ',firebase.auth().currentUser);
             }, 500);
@@ -49,7 +48,6 @@ const clickLogin = () => {
       console.log("Successful Login!");
       let user = result.user;
       let uid = user.uid;
-      view.toggleLoginButton();
     })
     .catch(error => {
       console.log("Failure Logging In!");
@@ -60,27 +58,24 @@ const clickLogin = () => {
   // view.printToggle();
   // prints search bar to search My Movies
   view.printMyMoviesSearch();
-  view.toggleLoginButton();
 };
 
 const activateListeners = () => {
-
+    firebase.auth().onAuthStateChanged(user => view.toggleLoginButton());
   $("#searchbar").keyup(function(e) {
     if (e.keyCode === 13) {
         searchForMovies();
     }
   });
-     
-  $(document).on("click", ".add-to-watchlist", function() {
-      console.log("added!");
-      let selectedMovieId = $(this).parent().attr('id');
-      clickAddToWatchList(selectedMovieId);
-    });
 
+  $(document).on("click", ".add-to-watchlist", e => addToWatchlist(e));
+  $(document).on("click", "#deleteMovie", e => deleteUserMovie(e));
   $(document).on("click", "path", e => clickRating(e));
   $(document).on("click", "#loginBtn", clickLogin);
   $(document).on("click", "#logoutBtn", clickLogout);
   $(".filter").on("click", view.filterResults);
+
+
 };
 
 
@@ -110,27 +105,28 @@ function searchForMovies() {
                         databaseMovies.splice(i, 1); // remove the match from the database array
                         firebaseMovies.push(fbMovie);
                     }
-                }    
+                }
             });
             firebaseMovies.forEach(movie => view.printCards(movie));
             databaseMovies.forEach(movie => view.printCards(movie));
         });
 }
 
-const clickAddToWatchList = (movieToAdd) => {
+const addToWatchlist = (movieClicked) => {
     let currentUser = firebase.auth().currentUser.uid;
+    let $selectedMovie = $(movieClicked.currentTarget).parent().attr('id');
 // testing for current user, if no user they cannot add movie
     if (currentUser === null) {
         alert("Sign In To Use This Premium Feature");
     }
     else {
         let movieObj = {
-            movieID: movieToAdd,
+            movieID: $selectedMovie,
             uid: currentUser
         };
-        console.log(movieObj);
+        console.log(movieObj, 'ready to add');
         model.postFirebaseMovie(movieObj)
-        .then(view.printSuccessMsg());
+        .then(view.printSuccessBtn($selectedMovie));
     }
 };
 
@@ -145,12 +141,8 @@ const clickRating = event => {
 };
 
 
-// pass firebase ID of movie user clicked to delete and remove from FB,
-// then remove from DOM
-module.exports.clickDeleteMovie = fbID => {
-    model.deleteFirebaseMovie(fbID);
-    // .then(view.removeCard(fbID));
+const deleteUserMovie = movieClicked => {
+    let $selectedMovie = $(movieClicked.currentTarget).parent().attr('id');
+    model.deleteFirebaseMovie($selectedMovie)
+    .then(view.removeCard($selectedMovie));
 };
-
-
-
