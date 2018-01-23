@@ -151,6 +151,10 @@ const clickAddToWatchList = (movieToAdd) => {
 
 // this should accept a firebase movie ID and a number rating from the user
 const clickRating = event => {
+    let fbID = event.target.parentNode.parentNode.parentNode.parentNode.id,
+    rating = [...event.target.parentNode.parentNode.classList]
+              .find(elm => elm.match(/\d+/))
+              .match(/\d+/)[0];
     model.rateMovie(fbID, rating)
     .then(view.printStars(fbID, rating));
 };
