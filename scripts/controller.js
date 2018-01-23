@@ -165,7 +165,6 @@ const clickRating = event => {
 // then remove from DOM
 const deleteUserMovie = movieClicked => {
     let $selectedMovie = $(movieClicked.currentTarget).parent().attr('id');
-    console.log($selectedMovie);
     model.deleteFirebaseMovie($selectedMovie)
     .then(view.removeCard($selectedMovie));
 };
