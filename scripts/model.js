@@ -127,24 +127,6 @@ module.exports.postFirebaseMovie = movieObj => {
   });
 };
 
-// returns a promise that adds a property of 'watched' to the given firebase movie object and sets the value to 'true'
-module.exports.markAsWatched = fbID => {
-  return new Promise((resolve, reject) => {
-    $.ajax({
-      url: `${dbURL}/${fbID}.json`,
-      method: "PATCH",
-      data: JSON.stringify({ watched: true })
-    })
-      .done(data => {
-        resolve(data);
-      })
-      .fail(error => {
-        console.log("uh-oh", error.statusText);
-        reject(error);
-      });
-  });
-};
-
 // returns a promise that should add or update the 'rating' property on a movie object in firebase
 module.exports.rateMovie = (fbID, rating) => {
   return new Promise((resolve, reject) => {

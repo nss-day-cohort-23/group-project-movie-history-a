@@ -17,7 +17,6 @@ module.exports.printHomepage = () => {
 
 };
 
-
 module.exports.printCards = movieData => {
   const cardsTemplate = require("../templates/movieCards.hbs");
   movieData.forEach( (movie) => {
@@ -64,3 +63,11 @@ module.exports.printStars = (id, rating) => {
     $(`div#${id} .stars .star-${i} svg`).addClass("star-unrated");
   }
 };
+
+module.exports.filterResults = function(e){
+  console.log('event target: ',this.id);
+  let filterType = this.id; 
+  $("div .card").not($(`.${filterType}`)).hide();
+  $("div .card").filter($(`.${filterType}`)).show();
+};
+
