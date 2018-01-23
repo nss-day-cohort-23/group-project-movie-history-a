@@ -11,10 +11,10 @@ module.exports.populatePage = () => {
     // call to API to get Top Rated movies, then pass Top Rated Movies to print to DOM
     model.getPopularMovies()
     .then(data => {
-        setTimeout(() => {
-            view.printCards(data);
-            view.toggleLoginButton();
-        }, 1500);
+      data.results.forEach(movie => {
+        model.getCast(movie)
+        .then(data => view.printCards(data));
+      });
     });
 };
 
