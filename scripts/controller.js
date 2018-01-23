@@ -157,8 +157,6 @@ const clickRating = event => {
 };
 
 
-// pass firebase ID of movie user clicked to delete and remove from FB,
-// then remove from DOM
 const deleteUserMovie = movieClicked => {
     let $selectedMovie = $(movieClicked.currentTarget).parent().attr('id');
     model.deleteFirebaseMovie($selectedMovie)
