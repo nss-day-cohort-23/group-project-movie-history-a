@@ -50,33 +50,12 @@ module.exports.getCast = data => {
 
 module.exports.searchMovieDB = userQuery => {
   // GET Promise to themoviedb.org all movies matching this search term.
-  return new Promise((resolve, reject)=>{
+  return new Promise((resolve, reject) => {
     let searchResults = [];
     $.ajax({
       url:`https://api.themoviedb.org/3/search/movie?api_key=${creds.mdbApiKey}&language=en-US&query=${userQuery}&page=1&include_adult=false`
-    }).done(movies=>{
-      movies.results.forEach(movie=>{
-         let movieYear = movie.release_date.slice(0, 4);
-         $.ajax({
-           url: `https://api.themoviedb.org/3/movie/${movie.id}/credits?api_key=${creds.mdbApiKey}`
-         }).done((cast)=>{
-           let movieTopBilledActorsArray = [];
-           cast.cast.forEach(castMember=>movieTopBilledActorsArray.push(castMember.name));
-           let topActors = movieTopBilledActorsArray.slice(0, 3).join(", ");
-           let moviePosterURL = `https://image.tmdb.org/t/p/w342${movie.poster_path}`;
-           let movieResult = {
-             movie_title: movie.title,
-             movie_id: movie.id,
-             movie_year: movieYear,
-             movie_cast: topActors,
-             movie_poster_full_URL: moviePosterURL
-           };
-           searchResults.push(movieResult);
-         }); // end of cast forEach
-      });
-      resolve(searchResults);
-    });
-  }); // end of Promise
+    }).done(movies => resolve(movies));
+  });
 };
 
 module.exports.getPopularMovies = () => {
