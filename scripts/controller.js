@@ -80,6 +80,7 @@ const activateListeners = () => {
       clickAddToWatchList(selectedMovieId);
     });
 
+  $(document).on("click", "#deleteMovie", e => deleteUserMovie(e));
   $(document).on("click", "path", e => clickRating(e));
   $(document).on("click", "#loginBtn", clickLogin);
   $(document).on("click", "#logoutBtn", clickLogout);
@@ -162,7 +163,9 @@ const clickRating = event => {
 
 // pass firebase ID of movie user clicked to delete and remove from FB,
 // then remove from DOM
-module.exports.clickDeleteMovie = fbID => {
+const deleteUserMovie = movieClicked => {
+    let $selectedMovie = $(movieClicked.currentTarget).parent().attr('id');
+    console.log($selectedMovie);
     model.deleteFirebaseMovie(fbID);
     // .then(view.removeCard(fbID));
 };
