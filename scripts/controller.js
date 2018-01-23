@@ -106,15 +106,15 @@ function searchForMovies() {
                         fbMovie.movie_cast = dbMovie.movie_cast;
                         fbMovie.movie_title = dbMovie.movie_title;
                         fbMovie.movie_year = dbMovie.movie_year;
-                        fbMovie.movie_poster_full_URL = dbMovie.movie_poster_full_URL;
+                        if(dbMovie.movie_poster_full_URL !== null) fbMovie.movie_poster_full_URL = dbMovie.movie_poster_full_URL;
                         databaseMovies.splice(i, 1); // remove the match from the database array
                         firebaseMovies.push(fbMovie);
                     }
                 }    
             });
-            view.printCards(firebaseMovies); // print user's movies
-            view.printCards(databaseMovies); // print database movies
-        });     
+            firebaseMovies.forEach(movie => view.printCards(movie));
+            databaseMovies.forEach(movie => view.printCards(movie));
+        });
 }
 
 const clickAddToWatchList = (movieToAdd) => {
