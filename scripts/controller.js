@@ -75,12 +75,6 @@ const activateListeners = () => {
     });
      
   $(document).on("click", ".add-to-watchlist", e => addToWatchlist(e)); 
-//   {
-    //   console.log("added!");
-    //   let selectedMovieId = $(this).parent().attr('id');
-    //   clickAddToWatchList(selectedMovieId);
-    // });
-
   $(document).on("click", "#deleteMovie", e => deleteUserMovie(e));
   $(document).on("click", "path", e => clickRating(e));
   $(document).on("click", "#loginBtn", clickLogin);
