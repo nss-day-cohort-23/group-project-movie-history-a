@@ -113,8 +113,8 @@ const addToWatchlist = (movieClicked) => {
     let $selectedMovie = $(movieClicked.currentTarget).parent().attr('id');
 // testing for current user, if no user they cannot add movie
     if (firebase.auth().currentUser === null) {
-        console.log("no user", "not logged in");
-        alert("Sign In To Use This Premium Feature");
+        alert("You must be signed in to use this premium feature");
+        clickLogin();
     }
     else {
         let currentUser = firebase.auth().currentUser.uid;
