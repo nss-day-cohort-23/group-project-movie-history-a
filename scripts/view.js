@@ -41,9 +41,6 @@ module.exports.toggleLoginButton = () =>{
   }
 };
 
-module.exports.printMyMoviesSearch = () => {
-  // Prints "Search My Movies" search bar in navbar
-};
 
 module.exports.printSuccessMsg = () => {
   alert("Successfully Added.");
@@ -65,9 +62,31 @@ module.exports.printStars = (id, rating) => {
 };
 
 module.exports.filterResults = function(e){
-  console.log('event target: ',this.id);
-  let filterType = this.id; 
+  let filterType = this.id;
   $("div .card").not($(`.${filterType}`)).hide();
   $("div .card").filter($(`.${filterType}`)).show();
+  printBreadcrumb(filterType);
 };
+
+const printBreadcrumb = (currentSection) => {
+  switch (currentSection) {
+    case 'untracked':
+      currentSection = "Untracked Movies";
+      break;
+    case 'watchlist':
+      currentSection = "Watchlist";
+      break;
+    case 'rated':
+      currentSection = "Rated Movies";
+      break;
+    case 'favorite':
+      currentSection = "My Favorite Movies";
+      break;
+    default:
+      currentSection = "";
+      
+  }
+  $("#currentSection").html(currentSection);
+};
+
 
