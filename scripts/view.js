@@ -29,6 +29,8 @@ module.exports.printCards = movieData => {
 };
 
 module.exports.removeCard = fbID => {
+  console.log(fbID, 'movie to delete');
+  $(`#${fbID}`).remove();
   // Removes movie card from DOM using fbID
 };
 
