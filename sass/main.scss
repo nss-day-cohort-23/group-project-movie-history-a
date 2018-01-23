@@ -42,3 +42,18 @@
 path {
   cursor: pointer;
 }
+
+.rated, 
+.watchlist,
+.untracked{
+    width: calc(342px + 1rem);
+    min-height: 742px;
+}
+
+.rated, 
+.watchlist,
+.untracked img{
+    // padding: .5rem;
+    margin: 0 auto;
+    display: block;
+}
