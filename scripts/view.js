@@ -28,7 +28,7 @@ module.exports.printCards = movieData => {
 };
 
 module.exports.removeCard = fbID => {
-  // Removes movie card from DOM using fbID
+  $(`#${fbID}`).remove();
 };
 
 module.exports.toggleLoginButton = () =>{
