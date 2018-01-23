@@ -11,9 +11,10 @@ module.exports.populatePage = () => {
     // call to API to get Top Rated movies, then pass Top Rated Movies to print to DOM
     model.getPopularMovies()
     .then(data => {
-        setTimeout(() => {
-            view.printCards(data);
-        }, 1500);
+      data.results.forEach(movie => {
+        model.getCast(movie)
+        .then(data => view.printCards(data));
+      });
     });
 };
 
@@ -66,8 +67,8 @@ const activateListeners = () => {
         searchForMovies();
     }
   });
-     
-  $(document).on("click", ".add-to-watchlist", e => addToWatchlist(e)); 
+
+  $(document).on("click", ".add-to-watchlist", e => addToWatchlist(e));
   $(document).on("click", "#deleteMovie", e => deleteUserMovie(e));
   $(document).on("click", "path", e => clickRating(e));
   $(document).on("click", "#loginBtn", clickLogin);
@@ -86,8 +87,11 @@ function searchForMovies() {
     const uid = firebase.auth().currentUser.uid;
     model.searchMovieDB(userQuery)
         .then(dbMovies => {
-            databaseMovies = dbMovies; // store in global variable
-            return model.getFirebaseMovies(uid); // pass in user id to get all of the user's movies
+            dbMovies.results.forEach(movie => {
+              model.getCast(movie)
+              .then(formattedMovie => databaseMovies.push(formattedMovie));
+            });
+            return model.getFirebaseMovies(uid); // pass in user id tdo get all of the user's movies
         })
         .then(fbMovies => {
             fbMovies.forEach(fbMovie => {
@@ -97,15 +101,15 @@ function searchForMovies() {
                         fbMovie.movie_cast = dbMovie.movie_cast;
                         fbMovie.movie_title = dbMovie.movie_title;
                         fbMovie.movie_year = dbMovie.movie_year;
-                        fbMovie.movie_poster_full_URL = dbMovie.movie_poster_full_URL;
+                        if(dbMovie.movie_poster_full_URL !== null) fbMovie.movie_poster_full_URL = dbMovie.movie_poster_full_URL;
                         databaseMovies.splice(i, 1); // remove the match from the database array
                         firebaseMovies.push(fbMovie);
                     }
-                }    
+                }
             });
-            view.printCards(firebaseMovies); // print user's movies
-            view.printCards(databaseMovies); // print database movies
-        });     
+            firebaseMovies.forEach(movie => view.printCards(movie));
+            databaseMovies.forEach(movie => view.printCards(movie));
+        });
 }
 
 const addToWatchlist = (movieClicked) => {
@@ -141,6 +145,3 @@ const deleteUserMovie = movieClicked => {
     model.deleteFirebaseMovie($selectedMovie)
     .then(view.removeCard($selectedMovie));
 };
-
-
-

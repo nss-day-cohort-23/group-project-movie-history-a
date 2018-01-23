@@ -26,78 +26,46 @@ const attachFirebaseIDs = data => {
   return dataToReturn;
 };
 
-const getActorsFromMovieDB = () => {
-  // EITHER: Successful GET requests inside of this mod call this function &
-  // attach the actor data to the general movie data obj.
-  // OR: this is exported & controller.js calls this func in the .then statement
-  // of each GET request.
-  // Joe Shep also said this can be chained onto some GET requests when one knows
-  // the movie_id already?
+module.exports.getCast = data => {
+  let movieYear = data.release_date.slice(0, 4);
+  return new Promise(function(resolve, reject) {
+    $.ajax({
+      url: `https://api.themoviedb.org/3/movie/${data.id}/credits?api_key=${creds.mdbApiKey}`
+    }).done(cast => {
+      let movieTopBilledActorsArray = [];
+      cast.cast.forEach(castMember => movieTopBilledActorsArray.push(castMember.name));
+      let topActors = movieTopBilledActorsArray.slice(0, 3).join(", ");
+      let moviePosterURL = `https://image.tmdb.org/t/p/w342${data.poster_path}`;
+      let movie = {
+        movie_title: data.title,
+        movie_id: data.id,
+        movie_year: movieYear,
+        movie_cast: topActors,
+        movie_poster_full_URL: moviePosterURL
+      };
+      resolve(movie);
+    });
+  });
 };
 
 module.exports.searchMovieDB = userQuery => {
   // GET Promise to themoviedb.org all movies matching this search term.
-  return new Promise((resolve, reject)=>{
+  return new Promise((resolve, reject) => {
     let searchResults = [];
     $.ajax({
       url:`https://api.themoviedb.org/3/search/movie?api_key=${creds.mdbApiKey}&language=en-US&query=${userQuery}&page=1&include_adult=false`
-    }).done(movies=>{
-      movies.results.forEach(movie=>{
-         let movieYear = movie.release_date.slice(0, 4);
-         $.ajax({
-           url: `https://api.themoviedb.org/3/movie/${movie.id}/credits?api_key=${creds.mdbApiKey}`
-         }).done((cast)=>{
-           let movieTopBilledActorsArray = [];
-           cast.cast.forEach(castMember=>movieTopBilledActorsArray.push(castMember.name));
-           let topActors = movieTopBilledActorsArray.slice(0, 3).join(", ");
-           let movieResult = {
-             movie_title: movie.title,
-             movie_id: movie.id,
-             movie_year: movieYear,
-             movie_cast: topActors
-           };
-           if(movie.poster_path !== null){
-            movieResult.movie_poster_full_URL = `https://image.tmdb.org/t/p/w342${movie.poster_path}`;
-          }
-           searchResults.push(movieResult);
-         }); // end of cast forEach
-      });
-      resolve(searchResults);
-    });
-  }); // end of Promise
+    }).done(movies => resolve(movies));
+  });
 };
 
 module.exports.getPopularMovies = () => {
   // GET Promise to themoviedb.org their 'popular' movies data.
-  return new Promise((resolve, reject)=>{
-    let popularMoviesArray = [];
+  return new Promise((resolve, reject) => {
+    // let popularMoviesArray = [];
     $.ajax({
       url: `https://api.themoviedb.org/3/movie/popular?api_key=${creds.mdbApiKey}&language=en-US&page=1`
-    }).done((popularMovies)=>{
-      let moviesArray = [];
-      popularMovies.results.forEach((movie)=>{
-        let movieYear = movie.release_date.slice(0, 4);
-        $.ajax({
-          url: `https://api.themoviedb.org/3/movie/${movie.id}/credits?api_key=${creds.mdbApiKey}`
-        }).done((cast)=>{
-          let movieTopBilledActorsArray = [];
-          cast.cast.forEach(castMember=>movieTopBilledActorsArray.push(castMember.name));
-          let topActors = movieTopBilledActorsArray.slice(0, 3).join(", ");
-          let popMovie = {
-            movie_title: movie.title,
-            movie_id: movie.id,
-            movie_year: movieYear,
-            movie_cast: topActors
-          };
-          if(movie.poster_path !== null){
-            popMovie.movie_poster_full_URL = `https://image.tmdb.org/t/p/w342${movie.poster_path}`;
-          }
-          popularMoviesArray.push(popMovie);
-        }); // end of cast forEach
-      }); // end of movie forEach
-    });
-    resolve(popularMoviesArray);
-  });// end of Promise
+    }).done(popularMovies => resolve(popularMovies));
+  });
 };
 
 
