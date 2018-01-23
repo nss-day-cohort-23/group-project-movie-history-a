@@ -112,8 +112,8 @@ function searchForMovies() {
                     }
                 }    
             });
-            view.printCards(firebaseMovies);
-            view.printCards(databaseMovies);
+            view.printCards(firebaseMovies); // print user's movies
+            view.printCards(databaseMovies); // print database movies
         });     
 }
 
