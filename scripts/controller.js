@@ -109,14 +109,13 @@ function searchForMovies() {
 }
 
 const addToWatchlist = (movieClicked) => {
-    // let currentUser = firebase.auth().currentUser.uid;
     let $selectedMovie = $(movieClicked.currentTarget).parent().attr('id');
-// testing for current user, if no user they cannot add movie
     if (firebase.auth().currentUser === null) {
         alert("You must be signed in to use this premium feature");
         clickLogin();
     }
     else {
+        $(`#${$selectedMovie}`).addClass("watchlist").removeClass("untracked");
         let currentUser = firebase.auth().currentUser.uid;
         let movieObj = {
             movieID: $selectedMovie,
