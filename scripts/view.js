@@ -19,12 +19,10 @@ module.exports.printHomepage = () => {
 
 module.exports.printCards = movieData => {
   const cardsTemplate = require("../templates/movieCards.hbs");
-  movieData.forEach( (movie) => {
-    $("#movie-container").append(cardsTemplate(movie));
-    if(movie.rating) {
-      module.exports.printStars(movie.fbID, movie.rating);
-    }
-  });
+  $("#movie-container").append(cardsTemplate(movieData));
+  if(movieData.rating) {
+    module.exports.printStars(movieData.fbID, movieData.rating);
+  }
 };
 
 module.exports.removeCard = fbID => {
