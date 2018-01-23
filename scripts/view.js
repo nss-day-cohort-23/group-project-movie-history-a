@@ -57,12 +57,3 @@ module.exports.filterResults = function(e){
   $("div .card").filter($(`.${filterType}`)).show();
 };
 
-module.exports.addFavoriteClass = () =>{
-  for(let i = 1; i < 11; i++){
-    if(i<=6){
-      $(".card").filter($(`star-${i}`)).removeClass('favorite');
-    } else if(i>7){
-      $(".card").filter($(`star-${i}`)).addClass('favorite');
-    }
-  }
-};
