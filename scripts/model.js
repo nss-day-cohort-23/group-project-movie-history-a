@@ -35,13 +35,12 @@ module.exports.getCast = data => {
       let movieTopBilledActorsArray = [];
       cast.cast.forEach(castMember => movieTopBilledActorsArray.push(castMember.name));
       let topActors = movieTopBilledActorsArray.slice(0, 3).join(", ");
-      let moviePosterURL = `https://image.tmdb.org/t/p/w342${data.poster_path}`;
       let movie = {
         movie_title: data.title,
         movie_id: data.id,
         movie_year: movieYear,
         movie_cast: topActors,
-        movie_poster_full_URL: moviePosterURL
+        movie_poster_full_URL: data.poster_path
       };
       resolve(movie);
     });
@@ -54,7 +53,10 @@ module.exports.searchMovieDB = userQuery => {
     let searchResults = [];
     $.ajax({
       url:`https://api.themoviedb.org/3/search/movie?api_key=${creds.mdbApiKey}&language=en-US&query=${userQuery}&page=1&include_adult=false`
-    }).done(movies => resolve(movies));
+    }).done(movies => {
+      console.log(movies);
+      resolve(movies);
+    });
   });
 };
 
