@@ -7,7 +7,7 @@
   {{/if}}
   {{!-- checking if there is a movie poster URL, if there is not, we will pass in placeholder image --}}
   {{#if movie_poster_full_URL}}
-    <img width="342" height="513" src="{{movie_poster_full_URL}}">
+    <img width="342" height="513" src="https://image.tmdb.org/t/p/w342{{movie_poster_full_URL}}">
   {{else}}
     <img width="342" height="513" src="https://islandpress.org/sites/default/files/400px%20x%20600px-r01BookNotPictured.jpg">
   {{/if}}
@@ -72,7 +72,7 @@
 {{else}}
   <div class="card p-2 dbMovie untracked" id="{{this.movie_id}}">
     {{#if movie_poster_full_URL}}
-      <img width="342" height="513" src="{{movie_poster_full_URL}}">
+      <img width="342" height="513" src="https://image.tmdb.org/t/p/w342{{movie_poster_full_URL}}">
     {{else}}
       <img width="342" height="513" src="https://islandpress.org/sites/default/files/400px%20x%20600px-r01BookNotPictured.jpg">
     {{/if}}
